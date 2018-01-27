@@ -43,7 +43,7 @@ public class OrbBehaviour : MonoBehaviour {
 
     public void MoveRight()
     {
-        if (currentPosition < GameController.Instance.clipCutCount -1)
+        if (currentPosition < GameController.Instance.GetClipCutCount() -1)
         {
             currentPosition++;
             EventDelegate.FireChangeGhostWaveFormPitch(currentPosition, pitchModifier);

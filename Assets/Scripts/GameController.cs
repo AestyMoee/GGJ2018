@@ -26,8 +26,11 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     int levelToLoadAtStart = 0;
 
+    [SerializeField]
+    GameObject prefabOrb = null;
+
     public AudioSource AudioSource { get; private set; }
-    public int clipCutCount { get; private set; }
+    private int clipCutCount;
 
     private void Awake()
     {
@@ -74,6 +77,8 @@ public class GameController : MonoBehaviour {
                 {
                     EventDelegate.FireChangeWaveFormPitch(i, (level.pitches[i] - 1)*4);
                     EventDelegate.FireChangeGhostWaveFormPitch(i, (level.pitches[i] - 1) * 4);
+
+                    GameObject orb = Instantiate(prefabOrb);
                 }
             }
         }
@@ -90,5 +95,10 @@ public class GameController : MonoBehaviour {
         {
             Debug.LogError("dynamicPitchChange not found");
         }
+    }
+
+    public int GetClipCutCount()
+    {
+        return (clipCutCount != 0 ? clipCutCount : 1);
     }
 }

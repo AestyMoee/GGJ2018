@@ -10,8 +10,6 @@ public class DynamicPitchChange : MonoBehaviour {
     AudioClip[] my_clips;
     float[] pitchChanges;
 
-    AudioClip modifiedClip;
-
     int numClips = 4;
 
     int currentClip = 0;
@@ -31,8 +29,6 @@ public class DynamicPitchChange : MonoBehaviour {
         pitchChanges = new float[numClips];
 
         SetupAudioClips(clip, pitches);
-
-        modifiedClip = Combine(my_clips);
 
         StartCoroutine(PlaySoundsWithPitchCoroutine(my_audio, my_clips, pitchChanges));
     }
