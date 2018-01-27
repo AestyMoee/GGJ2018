@@ -2,6 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public partial class EventDelegate
+{
+    public delegate void ChangeWaveformPitchHandler(int partCount, int idPart,float pitchModifier);
+    public static event ChangeWaveformPitchHandler ChangeWaveformPitch;
+    public static void FireChangeWaveFormPitch(int partCount, int idPart, float pitchModifier)
+    {
+        if(ChangeWaveformPitch != null)
+        {
+            ChangeWaveformPitch(partCount, idPart, pitchModifier);
+        }
+    }
+}
+
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(LineRenderer))]
 [RequireComponent(typeof(MeshRenderer))]
@@ -23,11 +37,13 @@ public class WaveformGenerator : MonoBehaviour {
         meshRenderer = GetComponent<MeshRenderer>();
 
         DrawWaveform();
+
+        EventDelegate.ChangeWaveformPitch += OnChangeWavefornPitch;
     }
-	
-	// Update is called once per frame
-	void Update () {
-        
+
+    private void OnDestroy()
+    {
+        EventDelegate.ChangeWaveformPitch -= OnChangeWavefornPitch;
     }
 
     public void DrawWaveform()
@@ -62,5 +78,17 @@ public class WaveformGenerator : MonoBehaviour {
 
         lineRenderer.positionCount = points.Count;
         lineRenderer.SetPositions(points.ToArray());
+    }
+
+    public void OnChangeWavefornPitch(int partCount, int idPart,float modifierValue)
+    {
+        int pointsPerPart = lineRenderer.positionCount / partCount;
+
+        for(int i=(pointsPerPart * idPart); i < ((pointsPerPart*idPart)+pointsPerPart-1);++i)
+        {
+            Vector3 positionPoint = lineRenderer.GetPosition(i);
+            positionPoint.z += modifierValue;
+            lineRenderer.SetPosition(i, positionPoint);
+        }
     }
 }
