@@ -26,7 +26,7 @@ public class DynamicPitchChange : MonoBehaviour {
 
         modifiedClip = Combine(my_clips);
 
-        PlaySoundsWithPitch(my_audio, pitchChanges);
+        StartCoroutine(PlaySoundsWithPitchCoroutine(my_audio,my_clips, pitchChanges));
     }
 	
 	// Update is called once per frame
@@ -119,8 +119,28 @@ public class DynamicPitchChange : MonoBehaviour {
         return my_clips;
     }
 
-    public void PlaySoundsWithPitch(AudioSource src, float[] pitches)
+    public IEnumerator PlaySoundsWithPitchCoroutine(AudioSource src, AudioClip[] clips, float[] pitches)
     {
-            
+        if (clips.Length == pitches.Length)
+        {
+            int i = 0;
+            while (i < clips.Length)
+            {
+                while (src.isPlaying)
+                {
+                    yield return null;
+                }
+
+                src.clip = clips[i];
+                src.pitch = pitches[i];
+                src.Play();
+
+                i++;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Clips count doesn't match with pitches count");
+        }
     }
 }
