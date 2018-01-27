@@ -8,8 +8,6 @@ public class OrbBehaviour : MonoBehaviour {
     [SerializeField]
     private float pitchModifier = 0.1f;
     [SerializeField]
-    private int partCount = 5;
-    [SerializeField]
     private int currentPosition = 2;
 
     LineRenderer lineRenderer;
@@ -18,7 +16,7 @@ public class OrbBehaviour : MonoBehaviour {
 	void Start () {
         lineRenderer = GetComponent<LineRenderer>();
 
-        EventDelegate.FireChangeGhostWaveFormPitch(partCount, currentPosition, pitchModifier);
+        EventDelegate.FireChangeGhostWaveFormPitch(currentPosition, pitchModifier);
     }
 	
 	// Update is called once per frame
@@ -38,18 +36,18 @@ public class OrbBehaviour : MonoBehaviour {
         if(currentPosition > 0)
         {
             currentPosition--;
-            EventDelegate.FireChangeGhostWaveFormPitch(partCount, currentPosition, pitchModifier);
-            EventDelegate.FireChangeGhostWaveFormPitch(partCount, currentPosition +1, -pitchModifier);
+            EventDelegate.FireChangeGhostWaveFormPitch(currentPosition, pitchModifier);
+            EventDelegate.FireChangeGhostWaveFormPitch(currentPosition +1, -pitchModifier);
         }
     }
 
     public void MoveRight()
     {
-        if (currentPosition < partCount -1)
+        if (currentPosition < GameController.Instance.clipCutCount -1)
         {
             currentPosition++;
-            EventDelegate.FireChangeGhostWaveFormPitch(partCount, currentPosition, pitchModifier);
-            EventDelegate.FireChangeGhostWaveFormPitch(partCount, currentPosition - 1, -pitchModifier);
+            EventDelegate.FireChangeGhostWaveFormPitch(currentPosition, pitchModifier);
+            EventDelegate.FireChangeGhostWaveFormPitch(currentPosition - 1, -pitchModifier);
         }
     }
 

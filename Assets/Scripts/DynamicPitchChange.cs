@@ -18,15 +18,23 @@ public class DynamicPitchChange : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        my_audio = GetComponent<AudioSource>();
+
+    }
+
+    public void PlaysClips(AudioClip clip, float[] pitches)
+    {
+        my_audio = GameController.Instance.AudioSource;
+
+        this.numClips = pitches.Length;
+
         my_clips = new AudioClip[numClips];
         pitchChanges = new float[numClips];
 
-        SetupAudioClips(my_audio);
+        SetupAudioClips(clip, pitches);
 
         modifiedClip = Combine(my_clips);
 
-        StartCoroutine(PlaySoundsWithPitchCoroutine(my_audio,my_clips, pitchChanges));
+        StartCoroutine(PlaySoundsWithPitchCoroutine(my_audio, my_clips, pitchChanges));
     }
 	
 	// Update is called once per frame
@@ -47,16 +55,16 @@ public class DynamicPitchChange : MonoBehaviour {
         //Debug.Log(my_audio.timeSamples);
     }
 
-    public void SetupAudioClips(AudioSource aud)
+    public void SetupAudioClips(AudioClip clip,float[] pitches)
     {
-        float clipLength = aud.clip.length / numClips;
+        float clipLength = clip.length / numClips;
 
         for (int x = 0; x < my_clips.Length; x++)
         {
             float start = clipLength * x;
             float end = start + clipLength;
-            my_clips[x] = MakeSubclip(aud.clip, start, end);
-            pitchChanges[x] = Random.Range(0.1f, 2f);
+            my_clips[x] = MakeSubclip(clip, start, end);
+            pitchChanges[x] = pitches[x];
         }
     }
 
@@ -126,14 +134,12 @@ public class DynamicPitchChange : MonoBehaviour {
             int i = 0;
             while (i < clips.Length)
             {
-                while (src.isPlaying)
-                {
-                    yield return null;
-                }
 
                 src.clip = clips[i];
                 src.pitch = pitches[i];
                 src.Play();
+
+                yield return new WaitForSeconds(clips[i].length);
 
                 i++;
             }

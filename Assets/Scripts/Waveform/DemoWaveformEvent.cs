@@ -34,11 +34,11 @@ public class DemoWaveformEvent : MonoBehaviour {
 
         if(Input.GetKeyDown(KeyCode.UpArrow))
         {
-            EventDelegate.FireChangeWaveFormPitch(partCount, currentModifierId, pitchModifier);
+            EventDelegate.FireChangeWaveFormPitch(currentModifierId, pitchModifier);
         }
         if(Input.GetKeyDown(KeyCode.DownArrow))
         {
-            EventDelegate.FireChangeWaveFormPitch(partCount, currentModifierId, -pitchModifier);
+            EventDelegate.FireChangeWaveFormPitch(currentModifierId, -pitchModifier);
         }
 	}
 }

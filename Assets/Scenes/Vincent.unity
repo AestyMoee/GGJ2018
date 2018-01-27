@@ -207,7 +207,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pitchModifier: 1
-  partCount: 5
   currentPosition: 2
 --- !u!120 &481470253
 LineRenderer:
@@ -519,6 +518,47 @@ AudioListener:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1089522311}
   m_Enabled: 1
+--- !u!1 &1406579045
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1406579047}
+  - component: {fileID: 1406579046}
+  m_Layer: 0
+  m_Name: DynamicPitch
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1406579046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1406579045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c63e87f90f16edd4eac32080e0e38531, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  my_clips: []
+--- !u!4 &1406579047
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1406579045}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -12.09775, y: -4.0233345, z: 13.940686}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1452014775
 GameObject:
   m_ObjectHideFlags: 0
@@ -727,13 +767,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveform: {fileID: 1039775258}
+  pitchChange: {fileID: 1406579046}
   levels:
   - clip: {fileID: 8300000, guid: 45eb72d358e90f04ba144d68ed731465, type: 3}
     pitches:
     - 0.75
     - 1
     - 1.25
-    - 1
     - 1
   - clip: {fileID: 0}
     pitches: []

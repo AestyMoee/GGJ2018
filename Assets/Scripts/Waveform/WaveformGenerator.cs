@@ -5,23 +5,23 @@ using UnityEngine;
 
 public partial class EventDelegate
 {
-    public delegate void ChangeWaveformPitchHandler(int partCount, int idPart,float pitchModifier);
+    public delegate void ChangeWaveformPitchHandler(int idPart,float pitchModifier);
     public static event ChangeWaveformPitchHandler ChangeWaveformPitch;
-    public static void FireChangeWaveFormPitch(int partCount, int idPart, float pitchModifier)
+    public static void FireChangeWaveFormPitch(int idPart, float pitchModifier)
     {
         if(ChangeWaveformPitch != null)
         {
-            ChangeWaveformPitch(partCount, idPart, pitchModifier);
+            ChangeWaveformPitch(idPart, pitchModifier);
         }
     }
 
-    public delegate void ChangeGhostWaveformPitchHandler(int partCount, int idPart, float pitchModifier);
+    public delegate void ChangeGhostWaveformPitchHandler(int idPart, float pitchModifier);
     public static event ChangeGhostWaveformPitchHandler ChangeGhostWaveformPitch;
-    public static void FireChangeGhostWaveFormPitch(int partCount, int idPart, float pitchModifier)
+    public static void FireChangeGhostWaveFormPitch(int idPart, float pitchModifier)
     {
         if (ChangeGhostWaveformPitch != null)
         {
-            ChangeGhostWaveformPitch(partCount, idPart, pitchModifier);
+            ChangeGhostWaveformPitch(idPart, pitchModifier);
         }
     }
 }
@@ -99,19 +99,19 @@ public class WaveformGenerator : MonoBehaviour {
         ghostLinerenderer.SetPositions(points.ToArray());
     }
 
-    public void OnChangeWavefornPitch(int partCount, int idPart,float modifierValue)
+    public void OnChangeWavefornPitch(int idPart,float modifierValue)
     {
-        ChangeWaveformPitch(lineRenderer, partCount, idPart, modifierValue);
+        ChangeWaveformPitch(lineRenderer, idPart, modifierValue);
     }
 
-    public void OnChangeGhostWaveformPitch(int partCount, int idPart, float modifierValue)
+    public void OnChangeGhostWaveformPitch(int idPart, float modifierValue)
     {
-        ChangeWaveformPitch(ghostLinerenderer, partCount, idPart, modifierValue);
+        ChangeWaveformPitch(ghostLinerenderer, idPart, modifierValue);
     }
 
-    private void ChangeWaveformPitch(LineRenderer line, int partCount, int idPart, float modifierValue)
+    private void ChangeWaveformPitch(LineRenderer line, int idPart, float modifierValue)
     {
-        int pointsPerPart = line.positionCount / partCount;
+        int pointsPerPart = line.positionCount / GameController.Instance.clipCutCount;
 
         for (int i = (pointsPerPart * idPart); i < ((pointsPerPart * idPart) + pointsPerPart); ++i)
         {

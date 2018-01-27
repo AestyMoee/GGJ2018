@@ -16,6 +16,8 @@ public class GameController : MonoBehaviour {
 
     [SerializeField]
     private WaveformGenerator waveform = null;
+    [SerializeField]
+    private DynamicPitchChange pitchChange = null;
 
 
     [SerializeField]
@@ -25,6 +27,7 @@ public class GameController : MonoBehaviour {
     int levelToLoadAtStart = 0;
 
     public AudioSource AudioSource { get; private set; }
+    public int clipCutCount { get; private set; }
 
     private void Awake()
     {
@@ -48,7 +51,7 @@ public class GameController : MonoBehaviour {
         AudioSource = GetComponent<AudioSource>();
         AudioSource.playOnAwake = false;
 
-        LoadLevel(0);
+        LoadLevel(levelToLoadAtStart);
     }
 	
 	// Update is called once per frame
@@ -59,7 +62,7 @@ public class GameController : MonoBehaviour {
     public void LoadLevel(int levelId)
     {
         LevelStruct level = levels[levelId];
-        AudioSource.clip = level.clip;
+        clipCutCount = level.pitches.Length;
 
         if (waveform != null)
         {
@@ -69,14 +72,23 @@ public class GameController : MonoBehaviour {
             {
                 if(level.pitches[i] != 1)
                 {
-                    EventDelegate.FireChangeWaveFormPitch(level.pitches.Length, i, (level.pitches[i] - 1)*4);
-                    EventDelegate.FireChangeGhostWaveFormPitch(level.pitches.Length, i, (level.pitches[i] - 1) * 4);
+                    EventDelegate.FireChangeWaveFormPitch(i, (level.pitches[i] - 1)*4);
+                    EventDelegate.FireChangeGhostWaveFormPitch(i, (level.pitches[i] - 1) * 4);
                 }
             }
         }
         else
         {
             Debug.LogError("Waveform Generator not found");
+        }
+
+        if (pitchChange != null)
+        {
+            pitchChange.PlaysClips(level.clip, level.pitches);
+        }
+        else
+        {
+            Debug.LogError("dynamicPitchChange not found");
         }
     }
 }
