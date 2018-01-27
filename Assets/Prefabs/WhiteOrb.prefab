@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 65703154394091048}
   - component: {fileID: 114482358153259154}
   m_Layer: 0
-  m_Name: Orb
+  m_Name: WhiteOrb
   m_TagString: Orb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -138,8 +138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8c62ba248c5efd438ca4ae5fe3dd2ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pitchModifier: 0.1
-  currentPosition: 2
+  pitchModifier: 0
+  currentPosition: 0
 --- !u!114 &114482358153259154
 MonoBehaviour:
   m_ObjectHideFlags: 1

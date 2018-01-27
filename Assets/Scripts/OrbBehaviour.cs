@@ -7,6 +7,9 @@ public class OrbBehaviour : MonoBehaviour {
 
     [SerializeField]
     private float pitchModifier = 0.1f;
+
+    public float PitchModifier { get { return pitchModifier; } set { pitchModifier = value; } }
+
     [SerializeField]
     private int currentPosition = 2;
 

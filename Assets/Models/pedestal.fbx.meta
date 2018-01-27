@@ -1,0 +1,316 @@
+fileFormatVersion: 2
+guid: 03d4fa4d7aad3ae43ab07f93fc7888a5
+timeCreated: 1517083795
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Camera
+    100002: Cube
+    100004: Cube (2)
+    100006: Directional Light
+    100008: laser_base
+    100010: laser_cannon
+    100012: lens
+    100014: //RootNode
+    100016: pedestal
+    100018: pedestal (10)
+    100020: pedestal (11)
+    100022: pedestal (12)
+    100024: pedestal (13)
+    100026: pedestal (14)
+    100028: pedestal (15)
+    100030: pedestal (16)
+    100032: pedestal (17)
+    100034: pedestal (18)
+    100036: pedestal (19)
+    100038: pedestal (2)
+    100040: pedestal (20)
+    100042: pedestal (21)
+    100044: pedestal (3)
+    100046: pedestal (4)
+    100048: pedestal (5)
+    100050: pedestal (6)
+    100052: pedestal (7)
+    100054: pedestal (8)
+    100056: pedestal (9)
+    100058: tiles
+    100060: track
+    100062: wall
+    100064: board
+    100066: tile
+    100068: tile (10)
+    100070: tile (11)
+    100072: tile (12)
+    100074: tile (13)
+    100076: tile (14)
+    100078: tile (15)
+    100080: tile (16)
+    100082: tile (17)
+    100084: tile (18)
+    100086: tile (19)
+    100088: tile (2)
+    100090: tile (20)
+    100092: tile (3)
+    100094: tile (4)
+    100096: tile (5)
+    100098: tile (6)
+    100100: tile (7)
+    100102: tile (8)
+    100104: tile (9)
+    400000: Camera
+    400002: Cube
+    400004: Cube (2)
+    400006: Directional Light
+    400008: laser_base
+    400010: laser_cannon
+    400012: lens
+    400014: //RootNode
+    400016: pedestal
+    400018: pedestal (10)
+    400020: pedestal (11)
+    400022: pedestal (12)
+    400024: pedestal (13)
+    400026: pedestal (14)
+    400028: pedestal (15)
+    400030: pedestal (16)
+    400032: pedestal (17)
+    400034: pedestal (18)
+    400036: pedestal (19)
+    400038: pedestal (2)
+    400040: pedestal (20)
+    400042: pedestal (21)
+    400044: pedestal (3)
+    400046: pedestal (4)
+    400048: pedestal (5)
+    400050: pedestal (6)
+    400052: pedestal (7)
+    400054: pedestal (8)
+    400056: pedestal (9)
+    400058: tiles
+    400060: track
+    400062: wall
+    400064: board
+    400066: tile
+    400068: tile (10)
+    400070: tile (11)
+    400072: tile (12)
+    400074: tile (13)
+    400076: tile (14)
+    400078: tile (15)
+    400080: tile (16)
+    400082: tile (17)
+    400084: tile (18)
+    400086: tile (19)
+    400088: tile (2)
+    400090: tile (20)
+    400092: tile (3)
+    400094: tile (4)
+    400096: tile (5)
+    400098: tile (6)
+    400100: tile (7)
+    400102: tile (8)
+    400104: tile (9)
+    2000000: Camera
+    2100000: Default
+    2100002: pedestal
+    2100004: laser
+    2100006: track
+    2100008: floor
+    2300000: Cube
+    2300002: Cube (2)
+    2300004: laser_base
+    2300006: laser_cannon
+    2300008: lens
+    2300010: pedestal
+    2300012: pedestal (10)
+    2300014: pedestal (11)
+    2300016: pedestal (12)
+    2300018: pedestal (13)
+    2300020: pedestal (14)
+    2300022: pedestal (15)
+    2300024: pedestal (16)
+    2300026: pedestal (17)
+    2300028: pedestal (18)
+    2300030: pedestal (19)
+    2300032: pedestal (2)
+    2300034: pedestal (20)
+    2300036: pedestal (21)
+    2300038: pedestal (3)
+    2300040: pedestal (4)
+    2300042: pedestal (5)
+    2300044: pedestal (6)
+    2300046: pedestal (7)
+    2300048: pedestal (8)
+    2300050: pedestal (9)
+    2300052: tiles
+    2300054: track
+    2300056: wall
+    2300058: board
+    2300060: tile
+    2300062: tile (10)
+    2300064: tile (11)
+    2300066: tile (12)
+    2300068: tile (13)
+    2300070: tile (14)
+    2300072: tile (15)
+    2300074: tile (16)
+    2300076: tile (17)
+    2300078: tile (18)
+    2300080: tile (19)
+    2300082: tile (2)
+    2300084: tile (20)
+    2300086: tile (3)
+    2300088: tile (4)
+    2300090: tile (5)
+    2300092: tile (6)
+    2300094: tile (7)
+    2300096: tile (8)
+    2300098: tile (9)
+    2300100: //RootNode
+    3300000: Cube
+    3300002: Cube (2)
+    3300004: laser_base
+    3300006: laser_cannon
+    3300008: lens
+    3300010: pedestal
+    3300012: pedestal (10)
+    3300014: pedestal (11)
+    3300016: pedestal (12)
+    3300018: pedestal (13)
+    3300020: pedestal (14)
+    3300022: pedestal (15)
+    3300024: pedestal (16)
+    3300026: pedestal (17)
+    3300028: pedestal (18)
+    3300030: pedestal (19)
+    3300032: pedestal (2)
+    3300034: pedestal (20)
+    3300036: pedestal (21)
+    3300038: pedestal (3)
+    3300040: pedestal (4)
+    3300042: pedestal (5)
+    3300044: pedestal (6)
+    3300046: pedestal (7)
+    3300048: pedestal (8)
+    3300050: pedestal (9)
+    3300052: tiles
+    3300054: track
+    3300056: wall
+    3300058: board
+    3300060: tile
+    3300062: tile (10)
+    3300064: tile (11)
+    3300066: tile (12)
+    3300068: tile (13)
+    3300070: tile (14)
+    3300072: tile (15)
+    3300074: tile (16)
+    3300076: tile (17)
+    3300078: tile (18)
+    3300080: tile (19)
+    3300082: tile (2)
+    3300084: tile (20)
+    3300086: tile (3)
+    3300088: tile (4)
+    3300090: tile (5)
+    3300092: tile (6)
+    3300094: tile (7)
+    3300096: tile (8)
+    3300098: tile (9)
+    3300100: //RootNode
+    4300000: wall
+    4300002: Cube
+    4300004: Cube (2)
+    4300006: tiles
+    4300008: pedestal
+    4300010: laser_base
+    4300012: laser_cannon
+    4300014: lens
+    4300016: pedestal (4)
+    4300018: track
+    4300020: board
+    4300022: tile
+    7400000: Take 001
+    9500000: //RootNode
+    10800000: Directional Light
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 1
+    materialSearch: 2
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

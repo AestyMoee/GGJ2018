@@ -1,0 +1,230 @@
+fileFormatVersion: 2
+guid: 994ff1550d2f330458a290687b2e7e62
+timeCreated: 1517083797
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: board
+    100004: Camera
+    100006: Cube (2)
+    100008: Directional Light
+    100010: laser_base
+    100012: laser_cannon
+    100014: lens
+    100016: pedestal
+    100018: tile
+    100020: tile (10)
+    100022: tile (11)
+    100024: tile (12)
+    100026: tile (13)
+    100028: tile (14)
+    100030: tile (15)
+    100032: tile (16)
+    100034: tile (17)
+    100036: tile (18)
+    100038: tile (19)
+    100040: tile (2)
+    100042: tile (20)
+    100044: tile (3)
+    100046: tile (4)
+    100048: tile (5)
+    100050: tile (6)
+    100052: tile (7)
+    100054: tile (8)
+    100056: tile (9)
+    100058: tiles
+    100060: track
+    100062: wall
+    400000: //RootNode
+    400002: board
+    400004: Camera
+    400006: Cube (2)
+    400008: Directional Light
+    400010: laser_base
+    400012: laser_cannon
+    400014: lens
+    400016: pedestal
+    400018: tile
+    400020: tile (10)
+    400022: tile (11)
+    400024: tile (12)
+    400026: tile (13)
+    400028: tile (14)
+    400030: tile (15)
+    400032: tile (16)
+    400034: tile (17)
+    400036: tile (18)
+    400038: tile (19)
+    400040: tile (2)
+    400042: tile (20)
+    400044: tile (3)
+    400046: tile (4)
+    400048: tile (5)
+    400050: tile (6)
+    400052: tile (7)
+    400054: tile (8)
+    400056: tile (9)
+    400058: tiles
+    400060: track
+    400062: wall
+    2000000: Camera
+    2100000: floor
+    2100002: Default
+    2100004: pedestal
+    2100006: laser
+    2100008: track
+    2300000: board
+    2300002: Cube (2)
+    2300004: laser_base
+    2300006: laser_cannon
+    2300008: lens
+    2300010: pedestal
+    2300012: tile
+    2300014: tile (10)
+    2300016: tile (11)
+    2300018: tile (12)
+    2300020: tile (13)
+    2300022: tile (14)
+    2300024: tile (15)
+    2300026: tile (16)
+    2300028: tile (17)
+    2300030: tile (18)
+    2300032: tile (19)
+    2300034: tile (2)
+    2300036: tile (20)
+    2300038: tile (3)
+    2300040: tile (4)
+    2300042: tile (5)
+    2300044: tile (6)
+    2300046: tile (7)
+    2300048: tile (8)
+    2300050: tile (9)
+    2300052: tiles
+    2300054: track
+    2300056: wall
+    2300058: //RootNode
+    3300000: board
+    3300002: Cube (2)
+    3300004: laser_base
+    3300006: laser_cannon
+    3300008: lens
+    3300010: pedestal
+    3300012: tile
+    3300014: tile (10)
+    3300016: tile (11)
+    3300018: tile (12)
+    3300020: tile (13)
+    3300022: tile (14)
+    3300024: tile (15)
+    3300026: tile (16)
+    3300028: tile (17)
+    3300030: tile (18)
+    3300032: tile (19)
+    3300034: tile (2)
+    3300036: tile (20)
+    3300038: tile (3)
+    3300040: tile (4)
+    3300042: tile (5)
+    3300044: tile (6)
+    3300046: tile (7)
+    3300048: tile (8)
+    3300050: tile (9)
+    3300052: tiles
+    3300054: track
+    3300056: wall
+    3300058: //RootNode
+    4300000: wall
+    4300002: board
+    4300004: Cube (2)
+    4300006: tiles
+    4300008: pedestal
+    4300010: laser_base
+    4300012: laser_cannon
+    4300014: lens
+    4300016: tile
+    4300018: track
+    7400000: Take 001
+    9500000: //RootNode
+    10800000: Directional Light
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 1
+    materialSearch: 2
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

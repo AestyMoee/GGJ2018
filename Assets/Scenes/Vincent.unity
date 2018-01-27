@@ -642,18 +642,24 @@ MonoBehaviour:
   waveform: {fileID: 1039775258}
   pitchChange: {fileID: 1406579046}
   levels:
-  - clip: {fileID: 8300000, guid: 45eb72d358e90f04ba144d68ed731465, type: 3}
+  - dimensions: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: 45eb72d358e90f04ba144d68ed731465, type: 3}
     pitches:
     - 0.75
     - 1
     - 1.25
     - 1
-  - clip: {fileID: 0}
+  - dimensions: {x: 0, y: 0}
+    clip: {fileID: 0}
     pitches: []
-  - clip: {fileID: 0}
+  - dimensions: {x: 0, y: 0}
+    clip: {fileID: 0}
     pitches: []
   levelToLoadAtStart: 0
-  prefabOrb: {fileID: 1205762425167350, guid: 5a04314a00b0aad42be29bf5a707d505, type: 2}
+  prefabBlackOrb: {fileID: 1205762425167350, guid: 4ba798322b1a2f24c95fcdc4fd2853b5,
+    type: 2}
+  prefabWhiteOrb: {fileID: 1205762425167350, guid: 6dd1e7e083eedff47be3e9d96491528c,
+    type: 2}
 --- !u!4 &1607440696
 Transform:
   m_ObjectHideFlags: 0

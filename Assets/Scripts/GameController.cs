@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour {
     [System.Serializable]
     public struct LevelStruct
     {
+        public Vector2 dimensions;
         public AudioClip clip;
         public float[] pitches;
     }
@@ -27,7 +28,9 @@ public class GameController : MonoBehaviour {
     int levelToLoadAtStart = 0;
 
     [SerializeField]
-    GameObject prefabOrb = null;
+    GameObject prefabBlackOrb = null;
+    [SerializeField]
+    GameObject prefabWhiteOrb = null;
 
     public AudioSource AudioSource { get; private set; }
     private int clipCutCount;
@@ -78,7 +81,17 @@ public class GameController : MonoBehaviour {
                     EventDelegate.FireChangeWaveFormPitch(i, (level.pitches[i] - 1)*4);
                     EventDelegate.FireChangeGhostWaveFormPitch(i, (level.pitches[i] - 1) * 4);
 
-                    GameObject orb = Instantiate(prefabOrb);
+                    GameObject orb;
+                    if (level.pitches[i] > 1)
+                    {
+                        orb = Instantiate(prefabBlackOrb);
+                    }
+                    else
+                    {
+                        orb = Instantiate(prefabWhiteOrb);
+                    }
+
+                    orb.GetComponent<OrbBehaviour>().PitchModifier = (level.pitches[i] - 1) * 4;
                 }
             }
         }
