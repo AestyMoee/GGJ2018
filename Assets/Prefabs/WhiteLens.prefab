@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 65703154394091048}
   - component: {fileID: 114482358153259154}
   m_Layer: 0
-  m_Name: BlackOrb
+  m_Name: WhiteLens
   m_TagString: Orb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
