@@ -18,7 +18,7 @@ public class OrbBehaviour : MonoBehaviour {
 	void Start () {
         lineRenderer = GetComponent<LineRenderer>();
 
-        EventDelegate.FireChangeWaveFormPitch(partCount, currentPosition, pitchModifier);
+        EventDelegate.FireChangeGhostWaveFormPitch(partCount, currentPosition, pitchModifier);
     }
 	
 	// Update is called once per frame
@@ -38,8 +38,8 @@ public class OrbBehaviour : MonoBehaviour {
         if(currentPosition > 0)
         {
             currentPosition--;
-            EventDelegate.FireChangeWaveFormPitch(partCount, currentPosition, pitchModifier);
-            EventDelegate.FireChangeWaveFormPitch(partCount, currentPosition +1, -pitchModifier);
+            EventDelegate.FireChangeGhostWaveFormPitch(partCount, currentPosition, pitchModifier);
+            EventDelegate.FireChangeGhostWaveFormPitch(partCount, currentPosition +1, -pitchModifier);
         }
     }
 
@@ -48,8 +48,8 @@ public class OrbBehaviour : MonoBehaviour {
         if (currentPosition < partCount -1)
         {
             currentPosition++;
-            EventDelegate.FireChangeWaveFormPitch(partCount, currentPosition, pitchModifier);
-            EventDelegate.FireChangeWaveFormPitch(partCount, currentPosition - 1, -pitchModifier);
+            EventDelegate.FireChangeGhostWaveFormPitch(partCount, currentPosition, pitchModifier);
+            EventDelegate.FireChangeGhostWaveFormPitch(partCount, currentPosition - 1, -pitchModifier);
         }
     }
 

@@ -14,9 +14,18 @@ public partial class EventDelegate
             ChangeWaveformPitch(partCount, idPart, pitchModifier);
         }
     }
+
+    public delegate void ChangeGhostWaveformPitchHandler(int partCount, int idPart, float pitchModifier);
+    public static event ChangeGhostWaveformPitchHandler ChangeGhostWaveformPitch;
+    public static void FireChangeGhostWaveFormPitch(int partCount, int idPart, float pitchModifier)
+    {
+        if (ChangeGhostWaveformPitch != null)
+        {
+            ChangeGhostWaveformPitch(partCount, idPart, pitchModifier);
+        }
+    }
 }
 
-[RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(MeshRenderer))]
 public class WaveformGenerator : MonoBehaviour {
     
@@ -30,30 +39,28 @@ public class WaveformGenerator : MonoBehaviour {
 
     private float[] waveForm;
     private float[] samples;
-
-    private AudioSource audioSource = null;
+    
     private MeshRenderer meshRenderer = null;
     // Use this for initialization
     void Awake () {
-        audioSource = GetComponent<AudioSource>();
         meshRenderer = GetComponent<MeshRenderer>();
 
-        DrawWaveform();
-
         EventDelegate.ChangeWaveformPitch += OnChangeWavefornPitch;
+        EventDelegate.ChangeGhostWaveformPitch += OnChangeGhostWaveformPitch;
     }
 
     private void OnDestroy()
     {
         EventDelegate.ChangeWaveformPitch -= OnChangeWavefornPitch;
+        EventDelegate.ChangeGhostWaveformPitch -= OnChangeGhostWaveformPitch;
     }
 
-    public void DrawWaveform()
+    public void DrawWaveform(AudioClip clip)
     {
-        resolution = audioSource.clip.frequency / resolution;
+        resolution = clip.frequency / resolution;
 
-        samples = new float[audioSource.clip.samples * audioSource.clip.channels];
-        audioSource.clip.GetData(samples, 0);
+        samples = new float[clip.samples * clip.channels];
+        clip.GetData(samples, 0);
         
         waveForm = new float[(samples.Length / resolution)];
 
@@ -94,13 +101,23 @@ public class WaveformGenerator : MonoBehaviour {
 
     public void OnChangeWavefornPitch(int partCount, int idPart,float modifierValue)
     {
-        int pointsPerPart = ghostLinerenderer.positionCount / partCount;
+        ChangeWaveformPitch(lineRenderer, partCount, idPart, modifierValue);
+    }
 
-        for(int i=(pointsPerPart * idPart); i < ((pointsPerPart*idPart)+pointsPerPart);++i)
+    public void OnChangeGhostWaveformPitch(int partCount, int idPart, float modifierValue)
+    {
+        ChangeWaveformPitch(ghostLinerenderer, partCount, idPart, modifierValue);
+    }
+
+    private void ChangeWaveformPitch(LineRenderer line, int partCount, int idPart, float modifierValue)
+    {
+        int pointsPerPart = line.positionCount / partCount;
+
+        for (int i = (pointsPerPart * idPart); i < ((pointsPerPart * idPart) + pointsPerPart); ++i)
         {
-            Vector3 positionPoint = ghostLinerenderer.GetPosition(i);
+            Vector3 positionPoint = line.GetPosition(i);
             positionPoint.z += modifierValue;
-            ghostLinerenderer.SetPosition(i, positionPoint);
+            line.SetPosition(i, positionPoint);
         }
     }
 }
