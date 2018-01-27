@@ -8,8 +8,9 @@ public class DynamicPitchChange : MonoBehaviour {
 
     [SerializeField]
     AudioClip[] my_clips;
+    float[] pitchChanges;
 
-    int numClips = 3;
+    int numClips = 4;
 
     int currentClip = 0;
 
@@ -17,6 +18,7 @@ public class DynamicPitchChange : MonoBehaviour {
 	void Start () {
         my_audio = GetComponent<AudioSource>();
         my_clips = new AudioClip[numClips];
+        pitchChanges = new float[numClips];
 
         float clipLength = my_audio.clip.length / numClips;
 
@@ -25,61 +27,26 @@ public class DynamicPitchChange : MonoBehaviour {
             float start = clipLength * x;
             float end = start + clipLength;
             my_clips[x] = MakeSubclip(my_audio.clip, start, end);
+            pitchChanges[x] = Random.Range(0.1f, 2f);
         }
     }
 	
 	// Update is called once per frame
 	void Update () {
 
-        if(Input.GetKeyDown(KeyCode.Space) && !my_audio.isPlaying)
+        if(!my_audio.isPlaying)
         {
             my_audio.clip = my_clips[currentClip];
+            my_audio.pitch = pitchChanges[currentClip];
             my_audio.Play();
             currentClip++;
             if (currentClip >= my_clips.Length)
                 currentClip = 0;
-
-        }
-
-        if(Input.GetKeyDown(KeyCode.W))
-        {
-            my_audio.pitch += 0.25f;
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            my_audio.pitch -= 0.25f;
         }
 
         //Debug.Log(my_audio.time.ToString());
         //Debug.Log(my_audio.clip.length);
         //Debug.Log(my_audio.timeSamples);
-    }
-
-    void SplitAudio(AudioSource aud)
-    {
-        float clipLen = aud.clip.length / 5;
-
-        int samples = aud.clip.samples;
-
-        for(int x = 0; x < my_clips.Length; x++)
-        {
-            int frequency = aud.clip.frequency;
-            //Debug.Log(frequency);
-            float timeLength = aud.clip.length - aud.clip.length / 5;
-            int samplesLength = (int)(frequency * timeLength);
-
-            my_clips[x] = AudioClip.Create("Clip - " + x,
-                samples, 2, aud.clip.frequency, false);
-
-            float[] data = new float[samplesLength];
-
-            //
-            aud.clip.GetData(data, (int) (frequency * (clipLen*x)));
-
-            my_clips[x].SetData(data, 0);
-        }
-
-
     }
 
     private AudioClip MakeSubclip(AudioClip clip, float start, float stop)
@@ -97,5 +64,47 @@ public class DynamicPitchChange : MonoBehaviour {
         newClip.SetData(data, 0);
         /* Return the sub clip */
         return newClip;
+    }
+
+    public AudioClip Combine(AudioClip[] clips)
+    {
+        if (clips == null || clips.Length == 0)
+            return null;
+
+        int length = 0;
+        for (int i = 0; i < clips.Length; i++)
+        {
+            if (clips[i] == null)
+                continue;
+
+            length += clips[i].samples * clips[i].channels;
+        }
+
+        float[] data = new float[length];
+        length = 0;
+        for (int i = 0; i < clips.Length; i++)
+        {
+            if (clips[i] == null)
+                continue;
+
+            float[] buffer = new float[clips[i].samples * clips[i].channels];
+            clips[i].GetData(buffer, 0);
+            //System.Buffer.BlockCopy(buffer, 0, data, length, buffer.Length);
+            buffer.CopyTo(data, length);
+            length += buffer.Length;
+        }
+
+        if (length == 0)
+            return null;
+
+        AudioClip result = AudioClip.Create("Combine", length / 2, 2, 44100, false);
+        result.SetData(data, 0);
+
+        return result;
+    }
+
+    public AudioClip[] GetAudioClips()
+    {
+        return my_clips;
     }
 }
