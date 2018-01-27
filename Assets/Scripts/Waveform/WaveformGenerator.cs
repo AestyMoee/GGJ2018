@@ -17,23 +17,25 @@ public partial class EventDelegate
 }
 
 [RequireComponent(typeof(AudioSource))]
-[RequireComponent(typeof(LineRenderer))]
 [RequireComponent(typeof(MeshRenderer))]
 public class WaveformGenerator : MonoBehaviour {
     
     [SerializeField]
     private int resolution = 1;
 
+    [SerializeField]
+    private LineRenderer lineRenderer = null;
+    [SerializeField]
+    private LineRenderer ghostLinerenderer = null;
+
     private float[] waveForm;
     private float[] samples;
 
-    private AudioSource audioSource;
-    private LineRenderer lineRenderer;
-    private MeshRenderer meshRenderer;
+    private AudioSource audioSource = null;
+    private MeshRenderer meshRenderer = null;
     // Use this for initialization
-    void Start () {
+    void Awake () {
         audioSource = GetComponent<AudioSource>();
-        lineRenderer = GetComponent<LineRenderer>();
         meshRenderer = GetComponent<MeshRenderer>();
 
         DrawWaveform();
@@ -77,18 +79,28 @@ public class WaveformGenerator : MonoBehaviour {
         }
 
         lineRenderer.positionCount = points.Count;
+        ghostLinerenderer.positionCount = points.Count;
         lineRenderer.SetPositions(points.ToArray());
+
+        for (int i = 0; i < points.Count; ++i)
+        {
+            Vector3 point = points[i];
+            point.y = 0.05f;
+            points[i] = point;
+        }
+
+        ghostLinerenderer.SetPositions(points.ToArray());
     }
 
     public void OnChangeWavefornPitch(int partCount, int idPart,float modifierValue)
     {
-        int pointsPerPart = lineRenderer.positionCount / partCount;
+        int pointsPerPart = ghostLinerenderer.positionCount / partCount;
 
-        for(int i=(pointsPerPart * idPart); i < ((pointsPerPart*idPart)+pointsPerPart-1);++i)
+        for(int i=(pointsPerPart * idPart); i < ((pointsPerPart*idPart)+pointsPerPart);++i)
         {
-            Vector3 positionPoint = lineRenderer.GetPosition(i);
+            Vector3 positionPoint = ghostLinerenderer.GetPosition(i);
             positionPoint.z += modifierValue;
-            lineRenderer.SetPosition(i, positionPoint);
+            ghostLinerenderer.SetPosition(i, positionPoint);
         }
     }
 }
