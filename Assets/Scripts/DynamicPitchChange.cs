@@ -5,6 +5,7 @@ using UnityEngine;
 public class DynamicPitchChange : MonoBehaviour {
 
     AudioSource my_audio = null;
+    AudioClip my_clip = null;
 
     [SerializeField]
     AudioClip[] my_clips;
@@ -12,45 +13,65 @@ public class DynamicPitchChange : MonoBehaviour {
 
     int numClips = 3; //Default
     int current = 0;
-    bool interrupted = false;
+
     bool shouldPlay = false;
     bool shouldLoop = false;
+    bool hasReset = false;
+
+    float nextPitchChange = 0;
 
     private void Update()
     {
         if(my_audio != null)
         {
-            if(!my_audio.isPlaying && shouldPlay)
+            UpdatePitches();
+
+            if (current == pitchChanges.Length - 1)
+                Debug.Log("Hit");
+            if (my_audio.time >= nextPitchChange * current && !hasReset)
             {
-                my_audio.clip = my_clips[current];
+                Debug.Log("Change Pitch");
                 my_audio.pitch = pitchChanges[current];
-                my_audio.Play();
                 current++;
-                if (current >= my_clips.Length)
-                {
-                    current = 0;
-                    if(!shouldLoop)
-                        shouldPlay = false;
-                }
             }
 
-            if(Input.GetKeyDown(KeyCode.Space))
+            if (current >= pitchChanges.Length)
             {
-                if (my_audio.isPlaying)
-                    PlaybackInterrupt();
-                else
-                {
-                    current = 0;
-                    shouldPlay = true;
-                    shouldLoop = true;
-                }
+                hasReset = true;
+                current = 0;
+                if (!shouldLoop)
+                    shouldPlay = false;
             }
-            if(Input.GetKeyUp(KeyCode.Space))
+
+            if (!my_audio.isPlaying && shouldPlay)
             {
-                shouldLoop = false;
+                //my_audio.clip = my_clips[current];
+                //.pitch = pitchChanges[current];
+                my_audio.Play();
+                hasReset = false;
             }
+            InputManager();
         }
         
+    }
+
+    private void InputManager()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (my_audio.isPlaying)
+                PlaybackInterrupt();
+            else
+            {
+                current = 0;
+                shouldPlay = true;
+                shouldLoop = true;
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            shouldLoop = false;
+        }
     }
 
     public void StartPlayingAudio()
@@ -58,13 +79,18 @@ public class DynamicPitchChange : MonoBehaviour {
         shouldPlay = true;
     }
 
+    public void UpdatePitches()
+    {
+        pitchChanges = GameController.Instance.GetCurrentPitches();
+    }
+
     public void PlaysClips(AudioClip clip, float[] pitches)
     {
-        Debug.Log("Playing clip: " + clip);
-        Debug.Log("With pitches: " + pitches);
-
         //Game controller calls this function, no way it doesn't exist
         my_audio = GameController.Instance.AudioSource;
+        my_clip = clip;
+
+        my_audio.clip = my_clip;
         
         this.numClips = pitches.Length;
 
@@ -80,6 +106,7 @@ public class DynamicPitchChange : MonoBehaviour {
     private void SetupAudioClips(AudioClip clip, float[] pitches)
     {
         float clipLength = clip.length / numClips;
+        nextPitchChange = clipLength;
 
         for (int x = 0; x < my_clips.Length; x++)
         {
@@ -97,31 +124,6 @@ public class DynamicPitchChange : MonoBehaviour {
             my_audio.Stop();
             shouldPlay = false;
             current = 0;
-        }
-    }
-
-    //DEPRECATED
-    public IEnumerator PlaySoundsWithPitchCoroutine(AudioSource src, AudioClip[] clips, float[] pitches)
-    {
-        if (clips.Length == pitches.Length)
-        {
-            int i = 0;
-            while (i < clips.Length)
-            {
-                if (interrupted)
-                    break;
-                src.pitch = pitches[i];
-                src.clip = clips[i];
-                src.Play();
-
-                i++;
-                Debug.Log("Playing for:" + src.clip.name);
-                yield return new WaitForSeconds(src.clip.length);
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Clips count doesn't match with pitches count");
         }
     }
 
