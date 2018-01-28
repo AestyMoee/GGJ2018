@@ -47,6 +47,9 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     private GameObject[] tracks;
 
+    [SerializeField]
+    private Animator transition;
+
     public AudioSource AudioSource { get; private set; }
 
     public float TrackLenght { get; private set; }
@@ -328,6 +331,15 @@ public class GameController : MonoBehaviour {
 
     private void OnLevelIsDone()
     {
+        transition.SetTrigger("fadeIn");
         Debug.Log("level is done");
+        StartCoroutine(LevelTransitionDelay());
+    }
+
+    IEnumerator LevelTransitionDelay()
+    {
+        LoadLevel(currentLevel++);
+        yield return new WaitForSeconds(2f);
+        transition.SetTrigger("fadeOut");
     }
 }
