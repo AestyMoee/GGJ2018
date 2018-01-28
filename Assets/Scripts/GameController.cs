@@ -43,6 +43,8 @@ public class GameController : MonoBehaviour {
 
     private int clipCutCount;
 
+    private int currentLevel = 0;
+
     private void Awake()
     {
         if(Instance == null)
@@ -87,6 +89,11 @@ public class GameController : MonoBehaviour {
         if(!blockHorizontalInput)
         {
             MoveLens();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            GetCurrentPitches();
         }
 	}
 
@@ -155,9 +162,22 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    private void GoToFirstTrack()
+    {
+        for (int i = 0; i < tracks.Length; ++i)
+        {
+            if (tracks[i].activeSelf)
+            {
+                currentTrack = i;
+                break;
+            }
+        }
+    }
+
     public void LoadLevel(int levelId)
     {
         LevelStruct level = levels[levelId];
+        currentLevel = levelId;
         clipCutCount = level.pitches.Length;
 
 
@@ -225,11 +245,36 @@ public class GameController : MonoBehaviour {
             Debug.LogError("dynamicPitchChange not found");
         }
 
-        GoToNextTrack();
+        GoToFirstTrack();
     }
 
     public int GetClipCutCount()
     {
         return (clipCutCount != 0 ? clipCutCount : 1);
+    }
+
+    public float[] GetCurrentPitches()
+    {
+        float[] returnArray = new float[GetClipCutCount()];
+
+        for(int i=0;i<returnArray.Length;++i)
+        {
+            returnArray[i] = levels[currentLevel].pitches[i];
+        }
+
+        for(int i=0;i<tracks.Length;++i)
+        {
+            if(tracks[i].activeSelf)
+            {
+                OrbBehaviour[] orbsOnTrack = tracks[i].GetComponentsInChildren<OrbBehaviour>();
+
+                for(int j=0;j<orbsOnTrack.Length;++j)
+                {
+                    returnArray[orbsOnTrack[j].CurrentPosition] += (orbsOnTrack[j].PitchModifier/6f);
+                }
+            }
+        }
+
+        return returnArray;
     }
 }

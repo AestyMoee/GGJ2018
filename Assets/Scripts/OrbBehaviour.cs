@@ -8,9 +8,8 @@ public class OrbBehaviour : MonoBehaviour {
     private float pitchModifier = 0.1f;
 
     public float PitchModifier { get { return pitchModifier; } set { pitchModifier = value; } }
-
-    [SerializeField]
-    private int currentPosition = 2;
+    
+    public int CurrentPosition { get; private set; }
 
     [SerializeField]
     LineRenderer lineRenderer;
@@ -19,7 +18,7 @@ public class OrbBehaviour : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        EventDelegate.FireChangeGhostWaveFormPitch(currentPosition, pitchModifier);
+        EventDelegate.FireChangeGhostWaveFormPitch(CurrentPosition, pitchModifier);
     }
 
     private void Update()
@@ -36,23 +35,23 @@ public class OrbBehaviour : MonoBehaviour {
 
     public void MoveLeft()
     {
-        if(currentPosition > 0)
+        if(CurrentPosition > 0)
         {
-            currentPosition--;
-            EventDelegate.FireChangeGhostWaveFormPitch(currentPosition, pitchModifier);
-            EventDelegate.FireChangeGhostWaveFormPitch(currentPosition +1, -pitchModifier);
-            SetPosition(currentPosition);
+            CurrentPosition--;
+            EventDelegate.FireChangeGhostWaveFormPitch(CurrentPosition, pitchModifier);
+            EventDelegate.FireChangeGhostWaveFormPitch(CurrentPosition + 1, -pitchModifier);
+            SetPosition(CurrentPosition);
         }
     }
 
     public void MoveRight()
     {
-        if (currentPosition < GameController.Instance.GetClipCutCount() -1)
+        if (CurrentPosition < GameController.Instance.GetClipCutCount() -1)
         {
-            currentPosition++;
-            EventDelegate.FireChangeGhostWaveFormPitch(currentPosition, pitchModifier);
-            EventDelegate.FireChangeGhostWaveFormPitch(currentPosition - 1, -pitchModifier);
-            SetPosition(currentPosition);
+            CurrentPosition++;
+            EventDelegate.FireChangeGhostWaveFormPitch(CurrentPosition, pitchModifier);
+            EventDelegate.FireChangeGhostWaveFormPitch(CurrentPosition - 1, -pitchModifier);
+            SetPosition(CurrentPosition);
         }
     }
 
@@ -75,7 +74,7 @@ public class OrbBehaviour : MonoBehaviour {
 
     public void SetPosition(int idPart)
     {
-        currentPosition = idPart;
+        CurrentPosition = idPart;
 
         Vector3 position = transform.localPosition;
 
