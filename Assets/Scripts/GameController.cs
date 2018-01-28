@@ -69,7 +69,7 @@ public class GameController : MonoBehaviour {
             enabled = false;
         }
 
-        EventDelegate.LevelIsDone += OnLevelIsDone();
+        EventDelegate.LevelIsDone += OnLevelIsDone;
     }
 
     private int currentTrack = 0;
@@ -93,7 +93,7 @@ public class GameController : MonoBehaviour {
 
     private void OnDestroy()
     {
-        EventDelegate.LevelIsDone -= OnLevelIsDone();
+        EventDelegate.LevelIsDone -= OnLevelIsDone;
     }
 
     // Update is called once per frame
