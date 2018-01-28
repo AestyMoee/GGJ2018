@@ -15,6 +15,7 @@ public class MainMenu : MonoBehaviour {
 		if(Input.anyKeyDown)
         {
             //Change this to Load the proper Scene
+            Debug.Log("Loading First Level!");
             SceneManager.LoadScene(1);
         }
 	}
