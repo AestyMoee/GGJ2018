@@ -546,7 +546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8c62ba248c5efd438ca4ae5fe3dd2ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pitchModifier: -1.5
+  pitchModifier: 1.5
   lineRenderer: {fileID: 120134734749438292}
 --- !u!114 &114432998838160836
 MonoBehaviour:
@@ -573,7 +573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8c62ba248c5efd438ca4ae5fe3dd2ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pitchModifier: 1.5
+  pitchModifier: -1.5
   lineRenderer: {fileID: 120752640190647680}
 --- !u!120 &120134734749438292
 LineRenderer:

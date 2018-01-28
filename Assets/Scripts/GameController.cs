@@ -24,8 +24,6 @@ public class GameController : MonoBehaviour {
     [System.Serializable]
     public struct LevelStruct
     {
-        [Range(1,4)]
-        public int trackCount;
         public AudioClip clip;
         public float[] pitches;
 
@@ -202,15 +200,18 @@ public class GameController : MonoBehaviour {
         {
             if (tracks[i].activeSelf)
             {
-                Material pedestalMat = tracks[i].transform.GetChild(0).GetComponent<MeshRenderer>().material;
+                if (tracks[i].transform.childCount > 0)
+                {
+                    Material pedestalMat = tracks[i].transform.GetChild(0).GetComponent<MeshRenderer>().material;
 
-                if (i == currentTrack)
-                {
-                    pedestalMat.SetFloat("_Selected", 1);
-                }
-                else
-                {
-                    pedestalMat.SetFloat("_Selected", 0);
+                    if (i == currentTrack)
+                    {
+                        pedestalMat.SetFloat("_Selected", 1);
+                    }
+                    else
+                    {
+                        pedestalMat.SetFloat("_Selected", 0);
+                    }
                 }
             }
         }
@@ -221,9 +222,8 @@ public class GameController : MonoBehaviour {
         LevelStruct level = levels[levelId];
         currentLevel = levelId;
         clipCutCount = level.pitches.Length;
-
-
-        for (int i = 0; i < tracks.Length; ++i)
+        
+        for(int i=0;i<tracks.Length;++i)
         {
             tracks[i].SetActive(true);
         }
@@ -243,11 +243,14 @@ public class GameController : MonoBehaviour {
                 {
                     EventDelegate.FireChangeWaveFormPitch(i, (level.pitches[i] - 1)*6);
                     EventDelegate.FireChangeGhostWaveFormPitch(i, (level.pitches[i] - 1) * 6);
+                }
 
+                if(level.Pedestals.Length > i)
+                {
                     GameObject orb;
                     orb = Instantiate(level.Pedestals[currentLens]);
                     currentLens++;
-                    
+
                     orb.transform.parent = tracks[randomTrackIds[i]].transform;
                     Vector3 positionLens = orb.transform.position;
                     positionLens.z = 0;
@@ -256,15 +259,18 @@ public class GameController : MonoBehaviour {
                     int randomPart = 0;
                     do
                     {
-                        randomPart = Random.Range(0, ( 5 - orb.GetComponent<PedestalBehaviour>().orbs.Length));
+                        randomPart = Random.Range(0, (5 - orb.GetComponent<PedestalBehaviour>().orbs.Length));
                     } while (randomPart == i);
 
                     orb.GetComponent<PedestalBehaviour>().SetPosition(randomPart);
-
                 }
-                else
+            }
+
+            for (int i = 0; i < tracks.Length; ++i)
+            {
+                if (tracks[i].transform.childCount == 0)
                 {
-                    tracks[randomTrackIds[i]].SetActive(false);
+                    tracks[i].SetActive(false);
                 }
             }
         }
@@ -310,6 +316,11 @@ public class GameController : MonoBehaviour {
                     returnArray[orbsOnTrack[j].CurrentPosition] += (orbsOnTrack[j].PitchModifier/6f);
                 }
             }
+        }
+
+        for (int i = 0; i < returnArray.Length; ++i)
+        {
+            Debug.Log(returnArray[i]);
         }
 
         return returnArray;
