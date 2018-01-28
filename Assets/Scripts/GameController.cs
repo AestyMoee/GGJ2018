@@ -224,6 +224,7 @@ public class GameController : MonoBehaviour {
     {
         LevelStruct level = levels[levelId];
         currentLevel = levelId;
+        Debug.Log(currentLevel);
         clipCutCount = level.pitches.Length;
         
         for(int i=0;i<tracks.Length;++i)
@@ -334,12 +335,14 @@ public class GameController : MonoBehaviour {
         transition.SetTrigger("fadeIn");
         Debug.Log("level is done");
         StartCoroutine(LevelTransitionDelay());
+        Debug.Log(currentLevel);
     }
 
     IEnumerator LevelTransitionDelay()
     {
         yield return new WaitForSeconds(2f);
-        LoadLevel(currentLevel++);
+        currentLevel += 1;
+        LoadLevel(currentLevel);
         transition.SetTrigger("fadeOut");
     }
 }

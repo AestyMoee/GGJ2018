@@ -38,17 +38,12 @@ public class OrbBehaviour : MonoBehaviour {
     {
         EventDelegate.FireChangeGhostWaveFormPitch(CurrentPosition, pitchModifier);
         EventDelegate.FireChangeGhostWaveFormPitch(CurrentPosition + 1, -pitchModifier);
-
-        Debug.Log(CurrentPosition);
     }
 
     public void MoveRight()
     {
         EventDelegate.FireChangeGhostWaveFormPitch(CurrentPosition, pitchModifier);
         EventDelegate.FireChangeGhostWaveFormPitch(CurrentPosition - 1, -pitchModifier);
-
-
-        Debug.Log(CurrentPosition);
     }
 
     public void TouchOrb(Vector3 inPosition)
