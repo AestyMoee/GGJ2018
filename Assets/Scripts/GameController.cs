@@ -70,7 +70,7 @@ public class GameController : MonoBehaviour {
         AudioSource = GetComponent<AudioSource>();
         AudioSource.playOnAwake = false;
 
-        TrackLenght = tracks[0].GetComponent<MeshRenderer>().bounds.size.x * tracks[0].transform.localScale.x * 2;
+        TrackLenght = tracks[0].GetComponent<MeshRenderer>().bounds.size.x * tracks[0].transform.localScale.x;
 
         LoadLevel(levelToLoadAtStart);
     }
