@@ -52,4 +52,9 @@ public class PedestalBehaviour : MonoBehaviour {
             orbs[i].CurrentPosition = idPart + i;
         }
     }
+
+    public void DestroyPedestal()
+    {
+        Destroy(gameObject);
+    }
 }

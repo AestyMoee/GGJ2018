@@ -229,6 +229,11 @@ public class GameController : MonoBehaviour {
         for(int i=0;i<tracks.Length;++i)
         {
             tracks[i].SetActive(true);
+            PedestalBehaviour pedestal = tracks[i].transform.GetComponentInChildren<PedestalBehaviour>();
+            if (pedestal)
+            {
+                pedestal.DestroyPedestal();
+            }
         }
 
         if (waveform != null)
@@ -268,14 +273,6 @@ public class GameController : MonoBehaviour {
                     orb.GetComponent<PedestalBehaviour>().SetPosition(randomPart);
                 }
             }
-
-            for (int i = 0; i < tracks.Length; ++i)
-            {
-                if (tracks[i].transform.childCount == 0)
-                {
-                    tracks[i].SetActive(false);
-                }
-            }
         }
         else
         {
@@ -289,6 +286,14 @@ public class GameController : MonoBehaviour {
         else
         {
             Debug.LogError("dynamicPitchChange not found");
+        }
+
+        for (int i = 0; i < tracks.Length; ++i)
+        {
+            if (tracks[i].transform.childCount == 0)
+            {
+                tracks[i].SetActive(false);
+            }
         }
 
         GoToFirstTrack();
@@ -321,11 +326,6 @@ public class GameController : MonoBehaviour {
             }
         }
 
-        for (int i = 0; i < returnArray.Length; ++i)
-        {
-            Debug.Log(returnArray[i]);
-        }
-
         return returnArray;
     }
 
@@ -338,8 +338,8 @@ public class GameController : MonoBehaviour {
 
     IEnumerator LevelTransitionDelay()
     {
-        LoadLevel(currentLevel++);
         yield return new WaitForSeconds(2f);
+        LoadLevel(currentLevel++);
         transition.SetTrigger("fadeOut");
     }
 }
