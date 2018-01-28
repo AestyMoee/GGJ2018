@@ -8,7 +8,6 @@ public class DynamicPitchChange : MonoBehaviour {
     AudioClip my_clip = null;
 
     [SerializeField]
-    AudioClip[] my_clips;
     float[] pitchChanges;
 
     int numClips = 3; //Default
@@ -17,6 +16,9 @@ public class DynamicPitchChange : MonoBehaviour {
     bool shouldPlay = false;
     bool shouldLoop = false;
     bool hasReset = false;
+    bool targetHit = false;
+
+    bool disableInput = false;
 
     float nextPitchChange = 0;
 
@@ -24,24 +26,31 @@ public class DynamicPitchChange : MonoBehaviour {
     {
         if(my_audio != null)
         {
-            UpdatePitches();
-
-            if (current == pitchChanges.Length - 1)
-                Debug.Log("Hit");
-            if (my_audio.time >= nextPitchChange * current && !hasReset)
+            if(!targetHit)
             {
-                Debug.Log("Change Pitch");
-                my_audio.pitch = pitchChanges[current];
-                current++;
-            }
+                UpdatePitches();
 
-            if (current >= pitchChanges.Length)
-            {
-                hasReset = true;
-                current = 0;
-                if (!shouldLoop)
-                    shouldPlay = false;
+                if (my_audio.time >= nextPitchChange * current && !hasReset)
+                {
+                    //Debug.Log("Change Pitch");
+                    my_audio.pitch = pitchChanges[current];
+                    current++;
+                }
+
+                if (current >= pitchChanges.Length)
+                {
+                    hasReset = true;
+                    current = 0;
+                    if (!shouldLoop)
+                        shouldPlay = false;
+                }
             }
+            else
+            {
+                Debug.Log("Target hit, no more updating");
+                disableInput = true;
+            }
+            
 
             if (!my_audio.isPlaying && shouldPlay)
             {
@@ -49,8 +58,10 @@ public class DynamicPitchChange : MonoBehaviour {
                 //.pitch = pitchChanges[current];
                 my_audio.Play();
                 hasReset = false;
+                shouldPlay = !targetHit;
             }
-            InputManager();
+            if(!disableInput)
+                InputManager();
         }
         
     }
@@ -64,6 +75,7 @@ public class DynamicPitchChange : MonoBehaviour {
             else
             {
                 current = 0;
+                targetHit = PitchesMatchTarget();
                 shouldPlay = true;
                 shouldLoop = true;
             }
@@ -72,6 +84,16 @@ public class DynamicPitchChange : MonoBehaviour {
         {
             shouldLoop = false;
         }
+    }
+
+    bool PitchesMatchTarget()
+    {
+        for(int i = 0; i < pitchChanges.Length; i++)
+        {
+            if (pitchChanges[i] != 1)
+                return false;
+        }
+        return true;
     }
 
     public void StartPlayingAudio()
@@ -94,25 +116,32 @@ public class DynamicPitchChange : MonoBehaviour {
         
         this.numClips = pitches.Length;
 
-        my_clips = new AudioClip[numClips];
         pitchChanges = new float[numClips];
 
-        SetupAudioClips(clip, pitches);
+        InitializeAllBools();
+
+        InitializeClipAndPitchArray(clip, pitches);
 
         StartPlayingAudio();
         //StartCoroutine(PlaySoundsWithPitchCoroutine(my_audio, my_clips, pitchChanges));
     }
-    //Sets up the separated audio clips and pitches array;
-    private void SetupAudioClips(AudioClip clip, float[] pitches)
-    {
-        float clipLength = clip.length / numClips;
-        nextPitchChange = clipLength;
+    //Sets up the separated audio clips and pitches array
 
-        for (int x = 0; x < my_clips.Length; x++)
+    private void InitializeAllBools()
+    {
+        shouldPlay = false;
+        shouldLoop = false;
+        hasReset = false;
+        targetHit = false;
+        disableInput = false;
+    }
+
+    private void InitializeClipAndPitchArray(AudioClip clip, float[] pitches)
+    {
+        nextPitchChange = clip.length / numClips;
+
+        for (int x = 0; x < pitches.Length; x++)
         {
-            float start = clipLength * x;
-            float end = start + clipLength;
-            my_clips[x] = MakeSubclip(clip, start, end, x);
             pitchChanges[x] = pitches[x];
         }
     }
@@ -126,24 +155,4 @@ public class DynamicPitchChange : MonoBehaviour {
             current = 0;
         }
     }
-
-    //Function responsible for splitting up the audio clip into parts (one at a time)
-    private AudioClip MakeSubclip(AudioClip clip, float start, float stop, int j)
-    {
-        /* Create a new audio clip */
-        int frequency = clip.frequency;
-        float timeLength = stop - start;
-        int samplesLength = (int)(frequency * timeLength);
-        AudioClip newClip = AudioClip.Create(clip.name + "-sub" + j, samplesLength, 2, frequency, false);
-        /* Create a temporary buffer for the samples */
-        float[] data = new float[samplesLength];
-        /* Get the data from the original clip */
-        clip.GetData(data, (int)(frequency * start));
-        /* Transfer the data to the new clip */
-        newClip.SetData(data, 0);
-        /* Return the sub clip */
-        return newClip;
-    }
-
-
 }

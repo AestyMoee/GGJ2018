@@ -1545,6 +1545,11 @@ Prefab:
       propertyPath: levels.Array.data[0].pitches.Array.data[3]
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114124463266306218, guid: 83851db1caac699459e47e5fb2881f26,
+        type: 2}
+      propertyPath: levels.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 45eb72d358e90f04ba144d68ed731465, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 83851db1caac699459e47e5fb2881f26, type: 2}
   m_IsPrefabParent: 0
@@ -1818,7 +1823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c63e87f90f16edd4eac32080e0e38531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  my_clips: []
+  pitchChanges: []
 --- !u!4 &1923065207
 Transform:
   m_ObjectHideFlags: 0
