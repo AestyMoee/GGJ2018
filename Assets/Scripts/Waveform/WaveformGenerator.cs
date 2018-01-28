@@ -111,7 +111,7 @@ public class WaveformGenerator : MonoBehaviour {
 
     private void ChangeWaveformPitch(LineRenderer line, int idPart, float modifierValue)
     {
-        int pointsPerPart = line.positionCount / GameController.Instance.clipCutCount;
+        int pointsPerPart = line.positionCount / GameController.Instance.GetClipCutCount();
 
         for (int i = (pointsPerPart * idPart); i < ((pointsPerPart * idPart) + pointsPerPart); ++i)
         {

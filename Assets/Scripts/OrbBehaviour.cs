@@ -7,6 +7,9 @@ public class OrbBehaviour : MonoBehaviour {
 
     [SerializeField]
     private float pitchModifier = 0.1f;
+
+    public float PitchModifier { get { return pitchModifier; } set { pitchModifier = value; } }
+
     [SerializeField]
     private int currentPosition = 2;
 
@@ -18,18 +21,6 @@ public class OrbBehaviour : MonoBehaviour {
 
         EventDelegate.FireChangeGhostWaveFormPitch(currentPosition, pitchModifier);
     }
-	
-	// Update is called once per frame
-	void Update () {
-		if(Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            MoveLeft();
-        }
-        if(Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            MoveRight();
-        }
-	}
 
     public void MoveLeft()
     {
@@ -38,16 +29,18 @@ public class OrbBehaviour : MonoBehaviour {
             currentPosition--;
             EventDelegate.FireChangeGhostWaveFormPitch(currentPosition, pitchModifier);
             EventDelegate.FireChangeGhostWaveFormPitch(currentPosition +1, -pitchModifier);
+            SetPosition(currentPosition);
         }
     }
 
     public void MoveRight()
     {
-        if (currentPosition < GameController.Instance.clipCutCount -1)
+        if (currentPosition < GameController.Instance.GetClipCutCount() -1)
         {
             currentPosition++;
             EventDelegate.FireChangeGhostWaveFormPitch(currentPosition, pitchModifier);
             EventDelegate.FireChangeGhostWaveFormPitch(currentPosition - 1, -pitchModifier);
+            SetPosition(currentPosition);
         }
     }
 
@@ -61,5 +54,16 @@ public class OrbBehaviour : MonoBehaviour {
 
             }
         }
+    }
+
+    public void SetPosition(int idPart)
+    {
+        currentPosition = idPart;
+
+        Vector3 position = transform.localPosition;
+
+        position.x = (GameController.Instance.TrackLenght / GameController.Instance.GetClipCutCount() * idPart + (GameController.Instance.TrackLenght / GameController.Instance.GetClipCutCount()) / 2) - GameController.Instance.TrackLenght/2;
+
+        transform.localPosition = position;
     }
 }

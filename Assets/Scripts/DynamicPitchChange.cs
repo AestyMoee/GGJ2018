@@ -15,7 +15,6 @@ public class DynamicPitchChange : MonoBehaviour {
     bool interrupted = false;
     bool shouldPlay = false;
 
-
     private void Update()
     {
         if(my_audio != null)
@@ -32,6 +31,17 @@ public class DynamicPitchChange : MonoBehaviour {
                     shouldPlay = false;
                 }
             }
+
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                if (my_audio.isPlaying)
+                    PlaybackInterrupt();
+                else
+                {
+                    current = 0;
+                    shouldPlay = true;
+                }
+            }
         }
         
     }
@@ -43,8 +53,12 @@ public class DynamicPitchChange : MonoBehaviour {
 
     public void PlaysClips(AudioClip clip, float[] pitches)
     {
-        my_audio = GameController.Instance.AudioSource;
+        Debug.Log("Playing clip: " + clip);
+        Debug.Log("With pitches: " + pitches);
 
+        //Game controller calls this function, no way it doesn't exist
+        my_audio = GameController.Instance.AudioSource;
+        
         this.numClips = pitches.Length;
 
         my_clips = new AudioClip[numClips];
@@ -52,9 +66,9 @@ public class DynamicPitchChange : MonoBehaviour {
 
         SetupAudioClips(clip, pitches);
 
+        StartPlayingAudio();
         //StartCoroutine(PlaySoundsWithPitchCoroutine(my_audio, my_clips, pitchChanges));
     }
-
     //Sets up the separated audio clips and pitches array;
     private void SetupAudioClips(AudioClip clip, float[] pitches)
     {
@@ -75,6 +89,7 @@ public class DynamicPitchChange : MonoBehaviour {
         {
             my_audio.Stop();
             shouldPlay = false;
+            current = 0;
         }
     }
 
