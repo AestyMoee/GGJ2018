@@ -2,21 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(LineRenderer))]
 public class LaserBehaviour : MonoBehaviour {
 
+    [SerializeField]
     LineRenderer lineRenderer = null;
 
 	// Use this for initialization
 	void Start () {
-        lineRenderer = GetComponent<LineRenderer>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
         RaycastHit hit;
 
-        if(Physics.Raycast(transform.position,Vector3.forward,out hit,100))
+        Debug.DrawLine(transform.position, Vector3.forward * 10, Color.red);
+
+        if(Physics.Raycast(transform.position,Vector3.forward, out hit,10))
         {
             if(hit.collider.tag == "Orb")
             {

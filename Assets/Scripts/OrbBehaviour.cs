@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(LineRenderer))]
 public class OrbBehaviour : MonoBehaviour {
 
     [SerializeField]
@@ -13,13 +12,26 @@ public class OrbBehaviour : MonoBehaviour {
     [SerializeField]
     private int currentPosition = 2;
 
+    [SerializeField]
     LineRenderer lineRenderer;
+
+    bool receiveLaser = false;
 
 	// Use this for initialization
 	void Start () {
-        lineRenderer = GetComponent<LineRenderer>();
-
         EventDelegate.FireChangeGhostWaveFormPitch(currentPosition, pitchModifier);
+    }
+
+    private void Update()
+    {
+        if(!receiveLaser)
+        {
+            lineRenderer.positionCount = 0; 
+        }
+        else
+        {
+            receiveLaser = false;
+        }
     }
 
     public void MoveLeft()
@@ -46,13 +58,18 @@ public class OrbBehaviour : MonoBehaviour {
 
     public void TouchOrb(Vector3 inPosition)
     {
+        receiveLaser = true;
         RaycastHit hit;
-        if(Physics.Raycast(inPosition,Vector3.forward,out hit, 100))
+        inPosition.z += 0.1f;
+        if(Physics.Raycast(inPosition,Vector3.forward,out hit, 10))
         {
-            if(hit.collider.tag == "Wall")
+            if(hit.collider.tag == "Orb")
             {
-
+                hit.collider.GetComponent<OrbBehaviour>().TouchOrb(hit.point);
             }
+            lineRenderer.positionCount = 2;
+            lineRenderer.SetPosition(0, inPosition);
+            lineRenderer.SetPosition(1, hit.point);
         }
     }
 
