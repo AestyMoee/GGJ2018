@@ -3,6 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+
+
+public partial class EventDelegate
+{
+    public delegate void LevelIsDoneHandler();
+    public static event LevelIsDoneHandler LevelIsDone;
+    public static void FireLevelIsDone()
+    {
+        if (LevelIsDone != null)
+        {
+            LevelIsDone();
+        }
+    }
+}
+
 [RequireComponent(typeof(AudioSource))]
 public class GameController : MonoBehaviour {
 
@@ -13,6 +28,8 @@ public class GameController : MonoBehaviour {
         public int trackCount;
         public AudioClip clip;
         public float[] pitches;
+
+        public GameObject[] Pedestals;
     }
 
     public static GameController Instance { get; private set; }
@@ -30,12 +47,10 @@ public class GameController : MonoBehaviour {
     int levelToLoadAtStart = 0;
 
     [SerializeField]
-    GameObject prefabBlackOrb = null;
-    [SerializeField]
-    GameObject prefabWhiteOrb = null;
+    private GameObject[] tracks;
 
     [SerializeField]
-    private GameObject[] tracks;
+    private Animator transition;
 
     public AudioSource AudioSource { get; private set; }
 
@@ -56,6 +71,8 @@ public class GameController : MonoBehaviour {
             Debug.LogWarning("Game Controller already exist");
             enabled = false;
         }
+
+        EventDelegate.LevelIsDone += OnLevelIsDone;
     }
 
     private int currentTrack = 0;
@@ -76,9 +93,14 @@ public class GameController : MonoBehaviour {
 
         LoadLevel(levelToLoadAtStart);
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void OnDestroy()
+    {
+        EventDelegate.LevelIsDone -= OnLevelIsDone;
+    }
+
+    // Update is called once per frame
+    void Update () {
 
         UnlockInput();
 
@@ -128,12 +150,12 @@ public class GameController : MonoBehaviour {
     {
         if (Input.GetAxisRaw("Horizontal") < 0)
         {
-            tracks[currentTrack].GetComponentInChildren<OrbBehaviour>().MoveLeft();
+            tracks[currentTrack].GetComponentInChildren<PedestalBehaviour>().MoveLeft();
             blockHorizontalInput = true;
         }
         else if (Input.GetAxisRaw("Horizontal") > 0)
         {
-            tracks[currentTrack].GetComponentInChildren<OrbBehaviour>().MoveRight();
+            tracks[currentTrack].GetComponentInChildren<PedestalBehaviour>().MoveRight();
             blockHorizontalInput = true;
         }
     }
@@ -145,6 +167,7 @@ public class GameController : MonoBehaviour {
             if(tracks[i].activeSelf)
             {
                 currentTrack = i;
+                UpdateSelectedTrack();
                 break;
             }
         }
@@ -157,6 +180,7 @@ public class GameController : MonoBehaviour {
             if (tracks[i].activeSelf)
             {
                 currentTrack = i;
+                UpdateSelectedTrack();
                 break;
             }
         }
@@ -169,7 +193,28 @@ public class GameController : MonoBehaviour {
             if (tracks[i].activeSelf)
             {
                 currentTrack = i;
+                UpdateSelectedTrack();
                 break;
+            }
+        }
+    }
+
+    public void UpdateSelectedTrack()
+    {
+        for(int i=0;i<tracks.Length;++i)
+        {
+            if (tracks[i].activeSelf)
+            {
+                Material pedestalMat = tracks[i].transform.GetChild(0).GetComponent<MeshRenderer>().material;
+
+                if (i == currentTrack)
+                {
+                    pedestalMat.SetFloat("_Selected", 1);
+                }
+                else
+                {
+                    pedestalMat.SetFloat("_Selected", 0);
+                }
             }
         }
     }
@@ -193,6 +238,8 @@ public class GameController : MonoBehaviour {
 
             waveform.DrawWaveform(level.clip);
 
+            int currentLens = 0;
+
             for(int i=0;i<level.pitches.Length;++i)
             {
                 if(level.pitches[i] != 1)
@@ -201,16 +248,9 @@ public class GameController : MonoBehaviour {
                     EventDelegate.FireChangeGhostWaveFormPitch(i, (level.pitches[i] - 1) * 6);
 
                     GameObject orb;
-                    if (level.pitches[i] > 1)
-                    {
-                        orb = Instantiate(prefabBlackOrb);
-                    }
-                    else
-                    {
-                        orb = Instantiate(prefabWhiteOrb);
-                    }
-
-                    orb.GetComponent<OrbBehaviour>().PitchModifier = (level.pitches[i] - 1) * 6;
+                    orb = Instantiate(level.Pedestals[currentLens]);
+                    currentLens++;
+                    
                     orb.transform.parent = tracks[randomTrackIds[i]].transform;
                     Vector3 positionLens = orb.transform.position;
                     positionLens.z = 0;
@@ -219,10 +259,10 @@ public class GameController : MonoBehaviour {
                     int randomPart = 0;
                     do
                     {
-                        randomPart = Random.Range(0, 4);
-                        orb.GetComponent<OrbBehaviour>().SetPosition(randomPart);
+                        randomPart = Random.Range(0, ( 5 - orb.GetComponent<PedestalBehaviour>().orbs.Length));
                     } while (randomPart == i);
-                    
+
+                    orb.GetComponent<PedestalBehaviour>().SetPosition(randomPart);
 
                 }
                 else
@@ -276,5 +316,19 @@ public class GameController : MonoBehaviour {
         }
 
         return returnArray;
+    }
+
+    private void OnLevelIsDone()
+    {
+        transition.SetTrigger("fadeIn");
+        Debug.Log("level is done");
+        StartCoroutine(LevelTransitionDelay());
+    }
+
+    IEnumerator LevelTransitionDelay()
+    {
+        LoadLevel(currentLevel++);
+        yield return new WaitForSeconds(2f);
+        transition.SetTrigger("fadeOut");
     }
 }

@@ -17,6 +17,7 @@ public class DynamicPitchChange : MonoBehaviour {
     bool shouldLoop = false;
     bool hasReset = false;
     bool targetHit = false;
+    bool stopUpdating = false;
 
     bool disableInput = false;
 
@@ -26,44 +27,48 @@ public class DynamicPitchChange : MonoBehaviour {
     {
         if(my_audio != null)
         {
-            if(!targetHit)
+            if(!stopUpdating)
             {
-                UpdatePitches();
-
-                if (my_audio.time >= nextPitchChange * current && !hasReset)
+                if (!targetHit)
                 {
-                    //Debug.Log("Change Pitch");
-                    my_audio.pitch = pitchChanges[current];
-                    current++;
+                    UpdatePitches();
+
+                    if (my_audio.time >= nextPitchChange * current && !hasReset)
+                    {
+                        //Debug.Log("Change Pitch");
+                        my_audio.pitch = pitchChanges[current];
+                        current++;
+                    }
+
+                    if (current >= pitchChanges.Length)
+                    {
+                        hasReset = true;
+                        current = 0;
+                        if (!shouldLoop)
+                            shouldPlay = false;
+                    }
+                }
+                else
+                {
+                    Debug.Log("Target hit, no more updating");
+                    EventDelegate.FireLevelIsDone();
+                    disableInput = true;
+                    stopUpdating = true;
                 }
 
-                if (current >= pitchChanges.Length)
-                {
-                    hasReset = true;
-                    current = 0;
-                    if (!shouldLoop)
-                        shouldPlay = false;
-                }
-            }
-            else
-            {
-                Debug.Log("Target hit, no more updating");
-                disableInput = true;
-            }
-            
 
-            if (!my_audio.isPlaying && shouldPlay)
-            {
-                //my_audio.clip = my_clips[current];
-                //.pitch = pitchChanges[current];
-                my_audio.Play();
-                hasReset = false;
-                shouldPlay = !targetHit;
+                if (!my_audio.isPlaying && shouldPlay)
+                {
+                    //my_audio.clip = my_clips[current];
+                    //.pitch = pitchChanges[current];
+                    my_audio.Play();
+                    hasReset = false;
+                    shouldPlay = !targetHit;
+                }
+                if (!disableInput)
+                    InputManager();
             }
-            if(!disableInput)
-                InputManager();
         }
-        
     }
 
     private void InputManager()
@@ -134,6 +139,7 @@ public class DynamicPitchChange : MonoBehaviour {
         hasReset = false;
         targetHit = false;
         disableInput = false;
+        stopUpdating = false;
     }
 
     private void InitializeClipAndPitchArray(AudioClip clip, float[] pitches)

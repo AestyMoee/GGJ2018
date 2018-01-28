@@ -1,10 +1,15 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Models/Materials/lens.mat.meta
 guid: d6d9a563a1bc7e34c9e69353838d9e3b
 timeCreated: 1517164602
+=======
+guid: 6f64139e905c902448ba620e46abfc59
+timeCreated: 1517166981
+>>>>>>> 57ea9e51d1ca6b741e52ae4c5ab50cbee9be24bd:Assets/Materials/laser_beam.mat.meta
 licenseType: Free
 NativeFormatImporter:
   externalObjects: {}
-  mainObjectFileID: 2100000
+  mainObjectFileID: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
