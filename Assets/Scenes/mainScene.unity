@@ -1009,7 +1009,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1058354308}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1781563337}
@@ -1462,6 +1462,16 @@ Prefab:
       propertyPath: tracks.Array.size
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114124463266306218, guid: 83851db1caac699459e47e5fb2881f26,
+        type: 2}
+      propertyPath: levels.Array.data[0].Lenses.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114124463266306218, guid: 83851db1caac699459e47e5fb2881f26,
+        type: 2}
+      propertyPath: levels.Array.data[0].Pedestals.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4562325449253714, guid: 83851db1caac699459e47e5fb2881f26, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1545,6 +1555,30 @@ Prefab:
       propertyPath: levels.Array.data[0].pitches.Array.data[3]
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114124463266306218, guid: 83851db1caac699459e47e5fb2881f26,
+        type: 2}
+      propertyPath: levels.Array.data[0].Lenses.Array.data[0]
+      value: 
+      objectReference: {fileID: 1205762425167350, guid: 6dd1e7e083eedff47be3e9d96491528c,
+        type: 2}
+    - target: {fileID: 114124463266306218, guid: 83851db1caac699459e47e5fb2881f26,
+        type: 2}
+      propertyPath: levels.Array.data[0].Lenses.Array.data[1]
+      value: 
+      objectReference: {fileID: 1205762425167350, guid: 67a3c2ab47b24b745b444ea6a5668e7e,
+        type: 2}
+    - target: {fileID: 114124463266306218, guid: 83851db1caac699459e47e5fb2881f26,
+        type: 2}
+      propertyPath: levels.Array.data[0].Pedestals.Array.data[0]
+      value: 
+      objectReference: {fileID: 1316077360800304, guid: 8372a39edd459de44b090789f1b158bc,
+        type: 2}
+    - target: {fileID: 114124463266306218, guid: 83851db1caac699459e47e5fb2881f26,
+        type: 2}
+      propertyPath: levels.Array.data[0].Pedestals.Array.data[1]
+      value: 
+      objectReference: {fileID: 1316077360800304, guid: 8372a39edd459de44b090789f1b158bc,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 83851db1caac699459e47e5fb2881f26, type: 2}
   m_IsPrefabParent: 0
