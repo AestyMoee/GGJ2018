@@ -3,6 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+
+
+public partial class EventDelegate
+{
+    public delegate void LevelIsDoneHandler();
+    public static event LevelIsDoneHandler LevelIsDone;
+    public static void FireLevelIsDone()
+    {
+        if (LevelIsDone != null)
+        {
+            LevelIsDone();
+        }
+    }
+}
+
 [RequireComponent(typeof(AudioSource))]
 public class GameController : MonoBehaviour {
 
@@ -53,6 +68,8 @@ public class GameController : MonoBehaviour {
             Debug.LogWarning("Game Controller already exist");
             enabled = false;
         }
+
+        EventDelegate.LevelIsDone += OnLevelIsDone();
     }
 
     private int currentTrack = 0;
@@ -73,9 +90,14 @@ public class GameController : MonoBehaviour {
 
         LoadLevel(levelToLoadAtStart);
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void OnDestroy()
+    {
+        EventDelegate.LevelIsDone -= OnLevelIsDone();
+    }
+
+    // Update is called once per frame
+    void Update () {
 
         UnlockInput();
 
@@ -291,5 +313,10 @@ public class GameController : MonoBehaviour {
         }
 
         return returnArray;
+    }
+
+    private void OnLevelIsDone()
+    {
+        Debug.Log("level is done");
     }
 }
