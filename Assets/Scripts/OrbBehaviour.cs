@@ -21,18 +21,6 @@ public class OrbBehaviour : MonoBehaviour {
 
         EventDelegate.FireChangeGhostWaveFormPitch(currentPosition, pitchModifier);
     }
-	
-	// Update is called once per frame
-	void Update () {
-		if(Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            MoveLeft();
-        }
-        if(Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            MoveRight();
-        }
-	}
 
     public void MoveLeft()
     {
@@ -41,6 +29,7 @@ public class OrbBehaviour : MonoBehaviour {
             currentPosition--;
             EventDelegate.FireChangeGhostWaveFormPitch(currentPosition, pitchModifier);
             EventDelegate.FireChangeGhostWaveFormPitch(currentPosition +1, -pitchModifier);
+            SetPosition(currentPosition);
         }
     }
 
@@ -51,6 +40,7 @@ public class OrbBehaviour : MonoBehaviour {
             currentPosition++;
             EventDelegate.FireChangeGhostWaveFormPitch(currentPosition, pitchModifier);
             EventDelegate.FireChangeGhostWaveFormPitch(currentPosition - 1, -pitchModifier);
+            SetPosition(currentPosition);
         }
     }
 
@@ -68,6 +58,8 @@ public class OrbBehaviour : MonoBehaviour {
 
     public void SetPosition(int idPart)
     {
+        currentPosition = idPart;
+
         Vector3 position = transform.localPosition;
 
         position.x = (GameController.Instance.TrackLenght / GameController.Instance.GetClipCutCount() * idPart + (GameController.Instance.TrackLenght / GameController.Instance.GetClipCutCount()) / 2) - GameController.Instance.TrackLenght/2;

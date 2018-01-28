@@ -56,6 +56,11 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    private int currentTrack = 0;
+
+    private bool blockVerticalInput = false;
+    private bool blockHorizontalInput = false;
+
     // Use this for initialization
     void Start () {
 #if !UNITY_EDITOR
@@ -72,8 +77,83 @@ public class GameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
+        UnlockInput();
+
+        if(!blockVerticalInput)
+        {
+            MoveCursor();
+        }
+        if(!blockHorizontalInput)
+        {
+            MoveLens();
+        }
 	}
+
+    private void UnlockInput()
+    {
+        if (Input.GetAxisRaw("Vertical") == 0)
+        {
+            blockVerticalInput = false;
+        }
+
+        if(Input.GetAxisRaw("Horizontal") == 0)
+        {
+            blockHorizontalInput = false;
+        }
+    }
+
+    private void MoveCursor()
+    {
+        if(Input.GetAxisRaw("Vertical") < 0)
+        {
+            GoToPreviousTrack();
+            blockVerticalInput = true;
+        }
+        else if(Input.GetAxisRaw("Vertical") > 0)
+        {
+            GoToNextTrack();
+            blockVerticalInput = true;
+        }
+    }
+
+    private void MoveLens()
+    {
+        if (Input.GetAxisRaw("Horizontal") < 0)
+        {
+            tracks[currentTrack].GetComponentInChildren<OrbBehaviour>().MoveLeft();
+            blockHorizontalInput = true;
+        }
+        else if (Input.GetAxisRaw("Horizontal") > 0)
+        {
+            tracks[currentTrack].GetComponentInChildren<OrbBehaviour>().MoveRight();
+            blockHorizontalInput = true;
+        }
+    }
+
+    private void GoToPreviousTrack()
+    {
+        for(int i=currentTrack-1; i >= 0; --i)
+        {
+            if(tracks[i].activeSelf)
+            {
+                currentTrack = i;
+                break;
+            }
+        }
+    }
+
+    private void GoToNextTrack()
+    {
+        for (int i = currentTrack + 1; i < tracks.Length; ++i)
+        {
+            if (tracks[i].activeSelf)
+            {
+                currentTrack = i;
+                break;
+            }
+        }
+    }
 
     public void LoadLevel(int levelId)
     {
@@ -97,8 +177,8 @@ public class GameController : MonoBehaviour {
             {
                 if(level.pitches[i] != 1)
                 {
-                    EventDelegate.FireChangeWaveFormPitch(i, (level.pitches[i] - 1)*4);
-                    EventDelegate.FireChangeGhostWaveFormPitch(i, (level.pitches[i] - 1) * 4);
+                    EventDelegate.FireChangeWaveFormPitch(i, (level.pitches[i] - 1)*6);
+                    EventDelegate.FireChangeGhostWaveFormPitch(i, (level.pitches[i] - 1) * 6);
 
                     GameObject orb;
                     if (level.pitches[i] > 1)
@@ -110,7 +190,7 @@ public class GameController : MonoBehaviour {
                         orb = Instantiate(prefabWhiteOrb);
                     }
 
-                    orb.GetComponent<OrbBehaviour>().PitchModifier = (level.pitches[i] - 1) * 4;
+                    orb.GetComponent<OrbBehaviour>().PitchModifier = (level.pitches[i] - 1) * 6;
                     orb.transform.parent = tracks[randomTrackIds[i]].transform;
                     Vector3 positionLens = orb.transform.position;
                     positionLens.z = 0;
@@ -144,6 +224,8 @@ public class GameController : MonoBehaviour {
         {
             Debug.LogError("dynamicPitchChange not found");
         }
+
+        GoToNextTrack();
     }
 
     public int GetClipCutCount()

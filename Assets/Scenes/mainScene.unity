@@ -962,6 +962,16 @@ Prefab:
       propertyPath: tracks.Array.data[3]
       value: 
       objectReference: {fileID: 1154600904}
+    - target: {fileID: 114124463266306218, guid: 83851db1caac699459e47e5fb2881f26,
+        type: 2}
+      propertyPath: levels.Array.data[0].pitches.Array.data[1]
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114124463266306218, guid: 83851db1caac699459e47e5fb2881f26,
+        type: 2}
+      propertyPath: levels.Array.data[0].pitches.Array.data[3]
+      value: 0.75
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 83851db1caac699459e47e5fb2881f26, type: 2}
   m_IsPrefabParent: 0
