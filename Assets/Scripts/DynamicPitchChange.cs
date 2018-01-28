@@ -10,9 +10,36 @@ public class DynamicPitchChange : MonoBehaviour {
     AudioClip[] my_clips;
     float[] pitchChanges;
 
-    int numClips = 4;
+    int numClips = 3; //Default
+    int current = 0;
+    bool interrupted = false;
+    bool shouldPlay = false;
 
-    int currentClip = 0;
+
+    private void Update()
+    {
+        if(my_audio != null)
+        {
+            if(!my_audio.isPlaying && shouldPlay)
+            {
+                my_audio.clip = my_clips[current];
+                my_audio.pitch = pitchChanges[current];
+                my_audio.Play();
+                current++;
+                if (current >= my_clips.Length)
+                {
+                    current = 0;
+                    shouldPlay = false;
+                }
+            }
+        }
+        
+    }
+
+    public void StartPlayingAudio()
+    {
+        shouldPlay = true;
+    }
 
     public void PlaysClips(AudioClip clip, float[] pitches)
     {
@@ -25,19 +52,33 @@ public class DynamicPitchChange : MonoBehaviour {
 
         SetupAudioClips(clip, pitches);
 
-        StartCoroutine(PlaySoundsWithPitchCoroutine(my_audio, my_clips, pitchChanges));
+        //StartCoroutine(PlaySoundsWithPitchCoroutine(my_audio, my_clips, pitchChanges));
+    }
+
+    //Sets up the separated audio clips and pitches array;
+    private void SetupAudioClips(AudioClip clip, float[] pitches)
+    {
+        float clipLength = clip.length / numClips;
+
+        for (int x = 0; x < my_clips.Length; x++)
+        {
+            float start = clipLength * x;
+            float end = start + clipLength;
+            my_clips[x] = MakeSubclip(clip, start, end, x);
+            pitchChanges[x] = pitches[x];
+        }
     }
 
     public void PlaybackInterrupt()
     {
         if(my_audio != null)
         {
-            StopCoroutine("PlaySoundsWithPitchCoroutine");
-            if (my_audio.isPlaying)
-                my_audio.Stop();
+            my_audio.Stop();
+            shouldPlay = false;
         }
     }
 
+    //DEPRECATED
     public IEnumerator PlaySoundsWithPitchCoroutine(AudioSource src, AudioClip[] clips, float[] pitches)
     {
         if (clips.Length == pitches.Length)
@@ -45,14 +86,15 @@ public class DynamicPitchChange : MonoBehaviour {
             int i = 0;
             while (i < clips.Length)
             {
-
-                src.clip = clips[i];
+                if (interrupted)
+                    break;
                 src.pitch = pitches[i];
+                src.clip = clips[i];
                 src.Play();
 
-                yield return new WaitForSeconds(clips[i].length);
-
                 i++;
+                Debug.Log("Playing for:" + src.clip.name);
+                yield return new WaitForSeconds(src.clip.length);
             }
         }
         else
@@ -61,28 +103,14 @@ public class DynamicPitchChange : MonoBehaviour {
         }
     }
 
-    //Sets up the separated audio clips and pitches array;
-    private void SetupAudioClips(AudioClip clip,float[] pitches)
-    {
-        float clipLength = clip.length / numClips;
-
-        for (int x = 0; x < my_clips.Length; x++)
-        {
-            float start = clipLength * x;
-            float end = start + clipLength;
-            my_clips[x] = MakeSubclip(clip, start, end);
-            pitchChanges[x] = pitches[x];
-        }
-    }
-
     //Function responsible for splitting up the audio clip into parts (one at a time)
-    private AudioClip MakeSubclip(AudioClip clip, float start, float stop)
+    private AudioClip MakeSubclip(AudioClip clip, float start, float stop, int j)
     {
         /* Create a new audio clip */
         int frequency = clip.frequency;
         float timeLength = stop - start;
         int samplesLength = (int)(frequency * timeLength);
-        AudioClip newClip = AudioClip.Create(clip.name + "-sub", samplesLength, 2, frequency, false);
+        AudioClip newClip = AudioClip.Create(clip.name + "-sub" + j, samplesLength, 2, frequency, false);
         /* Create a temporary buffer for the samples */
         float[] data = new float[samplesLength];
         /* Get the data from the original clip */

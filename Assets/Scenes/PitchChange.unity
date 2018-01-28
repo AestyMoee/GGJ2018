@@ -453,6 +453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c63e87f90f16edd4eac32080e0e38531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clipp: {fileID: 8300000, guid: 9496235f4a68d9e4fb8a6503f066391b, type: 3}
   my_clips: []
 --- !u!4 &2057918610
 Transform:
