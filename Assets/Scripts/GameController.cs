@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [RequireComponent(typeof(AudioSource))]
 public class GameController : MonoBehaviour {
@@ -8,7 +9,8 @@ public class GameController : MonoBehaviour {
     [System.Serializable]
     public struct LevelStruct
     {
-        public Vector2 dimensions;
+        [Range(1,4)]
+        public int trackCount;
         public AudioClip clip;
         public float[] pitches;
     }
@@ -32,7 +34,13 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     GameObject prefabWhiteOrb = null;
 
+    [SerializeField]
+    private GameObject[] tracks;
+
     public AudioSource AudioSource { get; private set; }
+
+    public float TrackLenght { get; private set; }
+
     private int clipCutCount;
 
     private void Awake()
@@ -57,6 +65,8 @@ public class GameController : MonoBehaviour {
         AudioSource = GetComponent<AudioSource>();
         AudioSource.playOnAwake = false;
 
+        TrackLenght = tracks[0].GetComponent<MeshRenderer>().bounds.size.x * tracks[0].transform.localScale.x * 2;
+
         LoadLevel(levelToLoadAtStart);
     }
 	
@@ -70,8 +80,17 @@ public class GameController : MonoBehaviour {
         LevelStruct level = levels[levelId];
         clipCutCount = level.pitches.Length;
 
+
+        for (int i = 0; i < tracks.Length; ++i)
+        {
+            tracks[i].SetActive(true);
+        }
+
         if (waveform != null)
         {
+            System.Random rnd = new System.Random();
+            int[] randomTrackIds = Enumerable.Range(0, 4).OrderBy(r => rnd.Next()).ToArray();
+
             waveform.DrawWaveform(level.clip);
 
             for(int i=0;i<level.pitches.Length;++i)
@@ -92,6 +111,23 @@ public class GameController : MonoBehaviour {
                     }
 
                     orb.GetComponent<OrbBehaviour>().PitchModifier = (level.pitches[i] - 1) * 4;
+                    orb.transform.parent = tracks[randomTrackIds[i]].transform;
+                    Vector3 positionLens = orb.transform.position;
+                    positionLens.z = 0;
+                    orb.transform.localPosition = positionLens;
+
+                    int randomPart = 0;
+                    do
+                    {
+                        randomPart = Random.Range(0, 4);
+                        orb.GetComponent<OrbBehaviour>().SetPosition(randomPart);
+                    } while (randomPart == i);
+                    
+
+                }
+                else
+                {
+                    tracks[randomTrackIds[i]].SetActive(false);
                 }
             }
         }

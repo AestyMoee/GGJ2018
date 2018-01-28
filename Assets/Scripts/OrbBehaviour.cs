@@ -65,4 +65,13 @@ public class OrbBehaviour : MonoBehaviour {
             }
         }
     }
+
+    public void SetPosition(int idPart)
+    {
+        Vector3 position = transform.localPosition;
+
+        position.x = (GameController.Instance.TrackLenght / GameController.Instance.GetClipCutCount() * idPart + (GameController.Instance.TrackLenght / GameController.Instance.GetClipCutCount()) / 2) - GameController.Instance.TrackLenght/2;
+
+        transform.localPosition = position;
+    }
 }
