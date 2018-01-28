@@ -15,8 +15,6 @@ public class LaserBehaviour : MonoBehaviour {
 	void Update () {
         RaycastHit hit;
 
-        Debug.DrawLine(transform.position, Vector3.forward * 10, Color.red);
-
         if(Physics.Raycast(transform.position,Vector3.forward, out hit,10))
         {
             if(hit.collider.tag == "Orb")
