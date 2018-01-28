@@ -14,6 +14,7 @@ public class DynamicPitchChange : MonoBehaviour {
     int current = 0;
     bool interrupted = false;
     bool shouldPlay = false;
+    bool shouldLoop = false;
 
     private void Update()
     {
@@ -28,7 +29,8 @@ public class DynamicPitchChange : MonoBehaviour {
                 if (current >= my_clips.Length)
                 {
                     current = 0;
-                    shouldPlay = false;
+                    if(!shouldLoop)
+                        shouldPlay = false;
                 }
             }
 
@@ -40,7 +42,12 @@ public class DynamicPitchChange : MonoBehaviour {
                 {
                     current = 0;
                     shouldPlay = true;
+                    shouldLoop = true;
                 }
+            }
+            if(Input.GetKeyUp(KeyCode.Space))
+            {
+                shouldLoop = false;
             }
         }
         
