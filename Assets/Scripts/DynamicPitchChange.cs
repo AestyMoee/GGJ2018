@@ -83,6 +83,8 @@ public class DynamicPitchChange : MonoBehaviour {
                 targetHit = PitchesMatchTarget();
                 shouldPlay = true;
                 shouldLoop = true;
+                GameController.Instance.laserAnimator.speed = 1 / my_audio.clip.length;
+                GameController.Instance.laserAnimator.SetTrigger("play");
             }
         }
         if (Input.GetKeyUp(KeyCode.Space))
@@ -128,6 +130,9 @@ public class DynamicPitchChange : MonoBehaviour {
         InitializeClipAndPitchArray(clip, pitches);
 
         StartPlayingAudio();
+
+        GameController.Instance.laserAnimator.speed = 1 / my_audio.clip.length;
+        GameController.Instance.laserAnimator.SetTrigger("play");
         //StartCoroutine(PlaySoundsWithPitchCoroutine(my_audio, my_clips, pitchChanges));
     }
     //Sets up the separated audio clips and pitches array
