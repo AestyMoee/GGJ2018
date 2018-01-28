@@ -28,6 +28,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1614598337495144
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4591742350282008}
+  - component: {fileID: 114362329690545268}
+  m_Layer: 0
+  m_Name: DynamicPitch
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &4562325449253714
 Transform:
   m_ObjectHideFlags: 1
@@ -37,8 +53,22 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4591742350282008}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4591742350282008
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1614598337495144}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4562325449253714}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &82079959002219544
@@ -133,23 +163,63 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveform: {fileID: 0}
-  pitchChange: {fileID: 0}
+  pitchChange: {fileID: 114362329690545268}
   levels:
-  - dimensions: {x: 0, y: 0}
-    clip: {fileID: 8300000, guid: 45eb72d358e90f04ba144d68ed731465, type: 3}
+  - clip: {fileID: 8300000, guid: 45eb72d358e90f04ba144d68ed731465, type: 3}
     pitches:
-    - 0.75
+    - 1.25
     - 1
     - 1.25
     - 1
-  - dimensions: {x: 0, y: 0}
-    clip: {fileID: 0}
-    pitches: []
-  - dimensions: {x: 0, y: 0}
-    clip: {fileID: 0}
-    pitches: []
+    Pedestals:
+    - {fileID: 1316077360800304, guid: 8372a39edd459de44b090789f1b158bc, type: 2}
+    - {fileID: 1316077360800304, guid: 8372a39edd459de44b090789f1b158bc, type: 2}
+  - clip: {fileID: 8300000, guid: 0aa9214ee5f4eaf41ad079beb76e3c9f, type: 3}
+    pitches:
+    - 0.75
+    - 1.25
+    - 0.75
+    - 1
+    Pedestals:
+    - {fileID: 1184303944753962, guid: eabf2f2b6cadd45469531b417c37c063, type: 2}
+    - {fileID: 1316077360800304, guid: 8372a39edd459de44b090789f1b158bc, type: 2}
+    - {fileID: 1184303944753962, guid: eabf2f2b6cadd45469531b417c37c063, type: 2}
+  - clip: {fileID: 8300000, guid: 5663411bfa87c4f428fd55daa4772cb9, type: 3}
+    pitches:
+    - 1
+    - 1
+    - 1
+    - 1
+    Pedestals:
+    - {fileID: 1316077360800304, guid: 8372a39edd459de44b090789f1b158bc, type: 2}
+    - {fileID: 1184303944753962, guid: eabf2f2b6cadd45469531b417c37c063, type: 2}
+    - {fileID: 1732908220603568, guid: 1a9580a5d6d523f46b7fe37fb7058b4e, type: 2}
+  - clip: {fileID: 8300000, guid: 5663411bfa87c4f428fd55daa4772cb9, type: 3}
+    pitches:
+    - 1.25
+    - 0.75
+    - 0.75
+    - 1.25
+    Pedestals:
+    - {fileID: 1316077360800304, guid: 8372a39edd459de44b090789f1b158bc, type: 2}
+    - {fileID: 1184303944753962, guid: eabf2f2b6cadd45469531b417c37c063, type: 2}
+    - {fileID: 1732908220603568, guid: 1a9580a5d6d523f46b7fe37fb7058b4e, type: 2}
   levelToLoadAtStart: 0
-  prefabBlackOrb: {fileID: 1205762425167350, guid: 4ba798322b1a2f24c95fcdc4fd2853b5,
-    type: 2}
-  prefabWhiteOrb: {fileID: 1205762425167350, guid: 6dd1e7e083eedff47be3e9d96491528c,
-    type: 2}
+  tracks:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  transition: {fileID: 0}
+--- !u!114 &114362329690545268
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1614598337495144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c63e87f90f16edd4eac32080e0e38531, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pitchChanges: []

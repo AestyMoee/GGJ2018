@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-
+using UnityEngine.SceneManagement;
 
 
 public partial class EventDelegate
@@ -148,15 +148,20 @@ public class GameController : MonoBehaviour {
 
     private void MoveLens()
     {
-        if (Input.GetAxisRaw("Horizontal") < 0)
+        PedestalBehaviour pedestal = tracks[currentTrack].GetComponentInChildren<PedestalBehaviour>();
+
+        if (pedestal)
         {
-            tracks[currentTrack].GetComponentInChildren<PedestalBehaviour>().MoveLeft();
-            blockHorizontalInput = true;
-        }
-        else if (Input.GetAxisRaw("Horizontal") > 0)
-        {
-            tracks[currentTrack].GetComponentInChildren<PedestalBehaviour>().MoveRight();
-            blockHorizontalInput = true;
+            if (Input.GetAxisRaw("Horizontal") < 0)
+            {
+                pedestal.MoveLeft();
+                blockHorizontalInput = true;
+            }
+            else if (Input.GetAxisRaw("Horizontal") > 0)
+            {
+                pedestal.MoveRight();
+                blockHorizontalInput = true;
+            }
         }
     }
 
@@ -164,7 +169,7 @@ public class GameController : MonoBehaviour {
     {
         for(int i=currentTrack-1; i >= 0; --i)
         {
-            if(tracks[i].activeSelf)
+            if(tracks[i].activeSelf && tracks[i].transform.childCount > 0)
             {
                 currentTrack = i;
                 UpdateSelectedTrack();
@@ -177,7 +182,7 @@ public class GameController : MonoBehaviour {
     {
         for (int i = currentTrack + 1; i < tracks.Length; ++i)
         {
-            if (tracks[i].activeSelf)
+            if (tracks[i].activeSelf && tracks[i].transform.childCount > 0)
             {
                 currentTrack = i;
                 UpdateSelectedTrack();
@@ -190,7 +195,7 @@ public class GameController : MonoBehaviour {
     {
         for (int i = 0; i < tracks.Length; ++i)
         {
-            if (tracks[i].activeSelf)
+            if (tracks[i].activeSelf && tracks[i].transform.childCount > 0)
             {
                 currentTrack = i;
                 UpdateSelectedTrack();
@@ -337,14 +342,20 @@ public class GameController : MonoBehaviour {
         transition.SetTrigger("fadeIn");
         Debug.Log("level is done");
         StartCoroutine(LevelTransitionDelay());
-        Debug.Log(currentLevel);
     }
 
     IEnumerator LevelTransitionDelay()
     {
         yield return new WaitForSeconds(2f);
         currentLevel += 1;
-        LoadLevel(currentLevel);
+        if (levels.Count > currentLevel)
+        {
+            LoadLevel(currentLevel);
+        }
+        else
+        {
+            SceneManager.LoadScene(0);
+        }
         transition.SetTrigger("fadeOut");
     }
 }
