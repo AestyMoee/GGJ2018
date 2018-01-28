@@ -113,48 +113,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &344523654
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 344523656}
-  - component: {fileID: 344523655}
-  m_Layer: 0
-  m_Name: GameController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &344523655
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 344523654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cfeffbc038ef6e45ba6bdc6bb35fef5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levels: []
-  levelToLoadAtStart: 0
---- !u!4 &344523656
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 344523654}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &492381355
 GameObject:
   m_ObjectHideFlags: 0
@@ -495,6 +453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c63e87f90f16edd4eac32080e0e38531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clipp: {fileID: 8300000, guid: 9496235f4a68d9e4fb8a6503f066391b, type: 3}
   my_clips: []
 --- !u!4 &2057918610
 Transform:
