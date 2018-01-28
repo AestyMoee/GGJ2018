@@ -49,6 +49,8 @@ public class GameController : MonoBehaviour {
 
     [SerializeField]
     private Animator transition;
+    [SerializeField]
+    private GameObject lazer;
 
     public AudioSource AudioSource { get; private set; }
 
