@@ -339,13 +339,14 @@ public class GameController : MonoBehaviour {
 
     private void OnLevelIsDone()
     {
-        transition.SetTrigger("fadeIn");
         Debug.Log("level is done");
         StartCoroutine(LevelTransitionDelay());
     }
 
     IEnumerator LevelTransitionDelay()
     {
+        yield return new WaitForSeconds(AudioSource.clip.length);
+        transition.SetTrigger("fadeIn");
         yield return new WaitForSeconds(2f);
         currentLevel += 1;
         if (levels.Count > currentLevel)
